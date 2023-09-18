@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="16dp">
+    <EditText
+        android:id="@+id/editTextVehicleName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Vehicle Name"/>
+    <EditText
+        android:id="@+id/editTextVehicleType"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Vehicle Type"/>
+    <EditText
+        android:id="@+id/editTextVehicleNumber"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Vehicle Number"/>
+    <EditText
+        android:id="@+id/editTextSource"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Source"/>
+    <EditText
+        android:id="@+id/editTextDestination"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Destination"/>
+    <EditText
+        android:id="@+id/editTextCurrentLocation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Current Location"/>
+    <EditText
+        android:id="@+id/editTextFuelStatus"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Fuel Status"/>
+</LinearLayout>
