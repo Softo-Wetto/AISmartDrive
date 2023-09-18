@@ -16,6 +16,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.aismartdrive.DB.Vehicle;
 import com.example.aismartdrive.DB.VehicleDao;
 import com.example.aismartdrive.Utils.MyApp;
+import com.example.aismartdrive.Utils.SharedPrefManager;
 
 public class VehicleDetailsActivity extends AppCompatActivity {
 
@@ -86,12 +87,32 @@ public class VehicleDetailsActivity extends AppCompatActivity {
 
 
         setViewIds();
+        manageRoleBasedFeatures();
 
         backButton.setOnClickListener(view -> {
             // Navigate back to the VehicleList
             Intent intent = new Intent(this, VehicleListActivity.class);
             startActivity(intent);
         });
+    }
+
+    private void manageRoleBasedFeatures() {
+        //Update Vehicle
+        if (SharedPrefManager.isAdmin()) {
+            btnDelete.setVisibility(View.VISIBLE);
+            btnUpdate.setVisibility(View.VISIBLE);
+
+            btnUpdate.setOnClickListener(view -> {
+                updateTheVehicle();
+            });
+            btnDelete.setOnClickListener(view -> {
+                deleteTheVehicle();
+            });
+
+        } else {
+            btnUpdate.setVisibility(View.GONE);
+            btnDelete.setVisibility(View.GONE);
+        }
     }
 
     private void updateTheVehicle() {

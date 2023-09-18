@@ -92,15 +92,15 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Update"
-        android:layout_margin="16dp"/>
-
+        android:layout_margin="16dp"
+        android:visibility="gone"/>
     <Button
         android:id="@+id/btnDelete"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Delete"
-        android:layout_margin="16dp"/>
-
+        android:layout_margin="16dp"
+        android:visibility="gone"/>
     <Button
         android:id="@+id/backButton"
         android:layout_width="wrap_content"
