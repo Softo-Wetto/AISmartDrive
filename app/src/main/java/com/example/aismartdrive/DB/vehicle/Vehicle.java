@@ -1,4 +1,4 @@
-package com.example.aismartdrive.DB;
+package com.example.aismartdrive.DB.vehicle;
 
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;

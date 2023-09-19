@@ -17,9 +17,9 @@ import androidx.lifecycle.LiveData;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.aismartdrive.DB.Vehicle;
-import com.example.aismartdrive.DB.VehicleDao;
-import com.example.aismartdrive.SensorUtil.AccelerometerData;
+import com.example.aismartdrive.DB.vehicle.Vehicle;
+import com.example.aismartdrive.DB.vehicle.VehicleDao;
+import com.example.aismartdrive.DB.sensor.AccelerometerData;
 import com.example.aismartdrive.SensorUtil.SensorService;
 import com.example.aismartdrive.Utils.MyApp;
 import com.example.aismartdrive.Utils.SharedPrefManager;
@@ -112,10 +112,7 @@ public class VehicleListActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        // Unregister the BroadcastReceiver
-        if (dataReceiver != null) {
-            unregisterReceiver(dataReceiver);
-        }
+        unregisterReceiver(dataReceiver);
     }
 
     private class SensorDataReceiver extends BroadcastReceiver {
@@ -128,7 +125,7 @@ public class VehicleListActivity extends AppCompatActivity {
                 if (accelerometerData != null && accelerometerData.getMagnitude() < 9.81){
                     getWindow().getDecorView().setBackgroundColor(getResources().getColor(R.color.white, null));
                 }else {
-                    Toast.makeText(VehicleListActivity.this, "Danger!!!", Toast.LENGTH_SHORT).show();
+                    // Toast.makeText(VehicleListActivity.this, "Danger!!!", Toast.LENGTH_SHORT).show();
                     getWindow().getDecorView().setBackgroundColor(getResources().getColor(R.color.red, null));
                 }
             }
@@ -183,8 +180,7 @@ public class VehicleListActivity extends AppCompatActivity {
     private void getDataFromDatabase() {
         // Retrieve all vehicles asynchronously using LiveData
         VehicleDao vehicleDao = MyApp.getAppDatabase().vehicleDao();
-        LiveData<List<Vehicle>> vehiclesLiveData =
-                vehicleDao.getAllVehicles();
+        LiveData<List<Vehicle>> vehiclesLiveData = vehicleDao.getAllVehicles();
         vehiclesLiveData.observe(this, vehicles -> {
             // Handle the list of vehicles here
             vehicleList.clear(); // Removes all the existing data

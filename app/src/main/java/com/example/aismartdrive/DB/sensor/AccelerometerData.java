@@ -1,8 +1,13 @@
-package com.example.aismartdrive.SensorUtil;
+package com.example.aismartdrive.DB.sensor;
+
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
 
 import java.io.Serializable;
 
+@Entity(tableName = "accelerometerData")
 public class AccelerometerData implements Serializable {
+    @PrimaryKey
     Long timeStamp;
     float acceXaxis;
     float acceYaxis;
