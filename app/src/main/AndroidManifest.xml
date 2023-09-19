@@ -13,10 +13,15 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AISmartDrive"
         tools:targetApi="31">
+        <activity
+            android:name=".HomeActivity"
+            android:exported="false" />
+
         <service
             android:name=".SensorUtil.SensorService"
             android:enabled="true"
             android:exported="false" />
+
         <activity
             android:name=".VehicleDetailsActivity"
             android:exported="false" />
