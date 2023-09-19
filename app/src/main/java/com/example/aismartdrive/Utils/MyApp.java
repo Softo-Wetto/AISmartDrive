@@ -20,6 +20,8 @@ public class MyApp extends Application {
                 MODE_PRIVATE);
         appDatabase = Room.databaseBuilder(getApplicationContext(),
                 AppDatabase.class, DATABASE_NAME).build();
+
+        SharedPrefManager.init(this);
     }
     public static SharedPreferences getPreferences() {
         return preferences;

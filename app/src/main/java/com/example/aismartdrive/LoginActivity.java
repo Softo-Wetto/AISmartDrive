@@ -11,6 +11,7 @@ import androidx.room.Room;
 
 import com.example.aismartdrive.DB.AppDatabase;
 import com.example.aismartdrive.DB.user.User;
+import com.example.aismartdrive.Utils.SharedPrefManager;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -43,11 +44,12 @@ public class LoginActivity extends AppCompatActivity {
             String password = passwordEditText.getText().toString();
             // Perform login authentication logic here
             if (isValidCredentials(email, password)) {
+                SharedPrefManager.setUserEmail(email);
                 // Successful login, navigate to next activity
                 Toast.makeText(LoginActivity.this, "Login successful",
                         Toast.LENGTH_SHORT).show();
                 //Go to the VehicleList Page
-                Intent intent = new Intent(this, VehicleListActivity.class);
+                Intent intent = new Intent(this, HomeActivity.class);
                 startActivity(intent);
             } else {
                 // Invalid credentials, show error message

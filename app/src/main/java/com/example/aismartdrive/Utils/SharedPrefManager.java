@@ -1,5 +1,6 @@
 package com.example.aismartdrive.Utils;
 
+import android.content.Context;
 import android.content.SharedPreferences;
 public class SharedPrefManager {
     private static SharedPreferences sharedPreferences = null;
@@ -34,6 +35,33 @@ public class SharedPrefManager {
                 getSharedPreference().getBoolean(KEY_USER_ROLE, false);
         return isAdmin;
     }
+
+
+
+    private static final String PREF_NAME = "MyAppPrefs";
+    private static final String KEY_USER_EMAIL = "user_email"; // Key to store the user's email
+
+    private static SharedPreferences preferences;
+
+    // Initialize shared preferences in your application's context
+    public static void init(Context context) {
+        preferences = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
+    }
+
+    // Set the logged-in user's email
+    public static void setUserEmail(String email) {
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString(KEY_USER_EMAIL, email);
+        editor.apply();
+    }
+
+    // Get the logged-in user's email
+    public static String getUserEmail() {
+        return preferences.getString(KEY_USER_EMAIL, null);
+    }
+
+
+
 
     //FUNCTION FOR LOGGING OUT DOWN BELOW
     private static final String KEY_USERNAME = "username";
