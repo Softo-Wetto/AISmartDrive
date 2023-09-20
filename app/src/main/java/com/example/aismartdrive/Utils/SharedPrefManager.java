@@ -36,8 +36,6 @@ public class SharedPrefManager {
         return isAdmin;
     }
 
-
-
     private static final String PREF_NAME = "MyAppPrefs";
     private static final String KEY_USER_EMAIL = "user_email"; // Key to store the user's email
 
@@ -59,8 +57,6 @@ public class SharedPrefManager {
     public static String getUserEmail() {
         return preferences.getString(KEY_USER_EMAIL, null);
     }
-
-
 
 
     //FUNCTION FOR LOGGING OUT DOWN BELOW

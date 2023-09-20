@@ -19,7 +19,6 @@ public class SignupActivity extends AppCompatActivity {
 
     private EditText nameEditText, emailEditText, phoneNumberEditText, dateOfBirthEditText, passwordEditText, confirmPasswordEditText;
     private Button signupButton, backButton;
-
     private AppDatabase appDatabase;
     private UserDao userDao;
     private CheckBox adminCheckBox;
@@ -69,6 +68,10 @@ public class SignupActivity extends AppCompatActivity {
 
                 // Successful signup, navigate to next activity or perform necessary actions
                 Toast.makeText(SignupActivity.this, "Signup successful", Toast.LENGTH_SHORT).show();
+                // Navigate to LoginActivity
+                Intent intent = new Intent(SignupActivity.this, LoginActivity.class);
+                startActivity(intent);
+                finish();
             } else {
                 // Invalid credentials, show error message
                 Toast.makeText(SignupActivity.this, "Invalid Credentials", Toast.LENGTH_SHORT).show();

@@ -1,5 +1,6 @@
 package com.example.aismartdrive;
 
+import android.annotation.SuppressLint;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -9,7 +10,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -30,7 +30,7 @@ import java.util.List;
 public class VehicleListActivity extends AppCompatActivity {
     ArrayList<Vehicle> vehicleList;
     private RecyclerView recyclerView;
-    private Button btnAddNewVehicle;
+    private Button btnAddNewVehicle, backButton;
     private VehicleAdapter vehicleAdapter;
     private Intent serviceIntent;
     private SensorDataReceiver dataReceiver;
@@ -47,6 +47,17 @@ public class VehicleListActivity extends AppCompatActivity {
         manageRoleBasedFeatures();
         manageSensorServices();
         getDataFromDatabase();
+        setViewIds();
+
+        backButton.setOnClickListener(view -> {
+            // Navigate back to the MainActivity
+            Intent intent = new Intent(this, HomeActivity.class);
+            startActivity(intent);
+        });
+    }
+
+    private void setViewIds() {
+        backButton = findViewById(R.id.backButton);
     }
 
     private void viewBinding() {
@@ -98,6 +109,7 @@ public class VehicleListActivity extends AppCompatActivity {
         }
     }
 
+    @SuppressLint("UnspecifiedRegisterReceiverFlag")
     private void manageSensorServices() {
         // Start the FallDetectionService (Existing code)
         serviceIntent = new Intent(this, SensorService.class);
@@ -187,18 +199,5 @@ public class VehicleListActivity extends AppCompatActivity {
             vehicleList.addAll(vehicles); // Adding all the data from Database
             vehicleAdapter.notifyDataSetChanged();
         });
-    }
-
-    public void logout(View view) {
-        logout(); // Call the logout function
-    }
-    private void logout() {
-        // Clear any user data, credentials, tokens, etc.
-        SharedPrefManager.clearUserData();
-
-        // Navigate to the login activity
-        Intent intent = new Intent(VehicleListActivity.this, LoginActivity.class);
-        startActivity(intent);
-        finish(); // Close the current activity
     }
 }

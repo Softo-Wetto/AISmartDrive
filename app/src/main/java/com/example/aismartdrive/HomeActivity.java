@@ -15,7 +15,6 @@ public class HomeActivity extends AppCompatActivity {
 
     private TextView userNameTextView;
     private Button vehicleListButton, userProfileButton;
-
     private AppDatabase appDatabase;
 
     @Override
@@ -23,19 +22,32 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
+        // Linking the views
+        setViewIds();
+
         // Initialize Room database
         appDatabase = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "user-database")
                 .allowMainThreadQueries() // For simplicity; consider using AsyncTask or LiveData
                 .build();
-
-        // Linking the views
-        setViewIds();
 
         // Retrieve the user's information from the database
         User loggedInUser = getUserInformation();
 
         // Display the user's name in the TextView
         userNameTextView.setText(loggedInUser.getName());
+
+        Button logoutButton = findViewById(R.id.logoutButton);
+        logoutButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SharedPrefManager.clearUserData();
+                // Navigate back to LoginActivity
+                Intent intent = new Intent(HomeActivity.this, LoginActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+                finish(); // Close the current activity
+            }
+        });
 
         // Set up click listeners for buttons
         vehicleListButton.setOnClickListener(new View.OnClickListener() {
@@ -63,13 +75,12 @@ public class HomeActivity extends AppCompatActivity {
         userProfileButton = findViewById(R.id.userProfileButton);
     }
 
+
     private User getUserInformation() {
         // Assuming the user is already logged in, retrieve user information based on the logged-in email
-        String loggedInEmail = SharedPrefManager.getUserEmail(); // You need to implement this method
-
+        String loggedInEmail = SharedPrefManager.getUserEmail();
         // Retrieve user information from the database
         User user = appDatabase.userDao().getUserByEmail(loggedInEmail);
-
         return user;
     }
 }
