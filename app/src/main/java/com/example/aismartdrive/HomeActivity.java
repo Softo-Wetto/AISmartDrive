@@ -34,7 +34,8 @@ public class HomeActivity extends AppCompatActivity {
         User loggedInUser = getUserInformation();
 
         // Display the user's name in the TextView
-        userNameTextView.setText(loggedInUser.getName());
+        String welcomeText = "Welcome, " + loggedInUser.getName();
+        userNameTextView.setText(welcomeText);
 
         Button logoutButton = findViewById(R.id.logoutButton);
         logoutButton.setOnClickListener(new View.OnClickListener() {

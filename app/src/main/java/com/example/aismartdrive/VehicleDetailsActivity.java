@@ -13,6 +13,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.LiveData;
+import androidx.room.Room;
 
 import com.anychart.AnyChart;
 import com.anychart.AnyChartView;
@@ -26,8 +27,10 @@ import com.anychart.enums.Anchor;
 import com.anychart.enums.MarkerType;
 import com.anychart.enums.TooltipPositionMode;
 import com.anychart.graphics.vector.Stroke;
+import com.example.aismartdrive.DB.AppDatabase;
 import com.example.aismartdrive.DB.sensor.TemperatureDao;
 import com.example.aismartdrive.DB.sensor.TemperatureData;
+import com.example.aismartdrive.DB.user.User;
 import com.example.aismartdrive.DB.vehicle.Vehicle;
 import com.example.aismartdrive.DB.vehicle.VehicleDao;
 import com.example.aismartdrive.Utils.MyApp;
@@ -46,13 +49,18 @@ public class VehicleDetailsActivity extends AppCompatActivity {
     VehicleDao vehicleDao;
     int vehicleId;
     Vehicle vehicle;
-
-    private Button backButton;
+    private Button backButton, bookButton;
+    private AppDatabase appDatabase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_vehicle_details);
+
+        // Initialize Room database
+        appDatabase = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "user-database")
+                .allowMainThreadQueries() // For simplicity; consider using AsyncTask or LiveData
+                .build();
 
         setViewIds();
         bindViews();
@@ -65,6 +73,11 @@ public class VehicleDetailsActivity extends AppCompatActivity {
         backButton.setOnClickListener(view -> {
             // Navigate back to the VehicleList
             Intent intent = new Intent(this, VehicleListActivity.class);
+            startActivity(intent);
+        });
+        bookButton.setOnClickListener(view -> {
+            // Navigate back to the VehicleList
+            Intent intent = new Intent(this, LocationActivity.class);
             startActivity(intent);
         });
     }
@@ -148,8 +161,10 @@ public class VehicleDetailsActivity extends AppCompatActivity {
     }
 
     private void manageRoleBasedFeatures() {
-        //Update Vehicle
-        if (SharedPrefManager.isAdmin()) {
+        User loggedInUser = getUserInformation();
+
+        if (loggedInUser != null && loggedInUser.isAdmin()) {
+            // User is an admin, show admin features
             btnDelete.setVisibility(View.VISIBLE);
             btnUpdate.setVisibility(View.VISIBLE);
 
@@ -159,12 +174,23 @@ public class VehicleDetailsActivity extends AppCompatActivity {
             btnDelete.setOnClickListener(view -> {
                 deleteTheVehicle();
             });
-
         } else {
+            // User is not an admin, hide admin features
             btnUpdate.setVisibility(View.GONE);
             btnDelete.setVisibility(View.GONE);
         }
     }
+
+    private User getUserInformation() {
+        // Retrieve the logged-in user's email from shared preferences
+        String loggedInEmail = SharedPrefManager.getUserEmail();
+
+        // Retrieve user information from the database using the email
+        User user = appDatabase.userDao().getUserByEmail(loggedInEmail);
+
+        return user;
+    }
+
 
     private void populatingVehicleDetails() {
 
@@ -300,5 +326,6 @@ public class VehicleDetailsActivity extends AppCompatActivity {
 
     private void setViewIds() {
         backButton = findViewById(R.id.backButton);
+        bookButton = findViewById(R.id.bookButton);
     }
 }

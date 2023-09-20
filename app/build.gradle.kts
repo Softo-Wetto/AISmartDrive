@@ -33,6 +33,8 @@ android {
 }
 
 dependencies {
+    implementation ("com.google.android.gms:play-services-maps:18.1.0")
+    implementation ("com.google.android.gms:play-services-location:18.0.0")
     implementation ("com.github.AnyChart:AnyChart-Android:1.1.5")
     implementation("androidx.room:room-runtime:2.5.2")
     annotationProcessor("androidx.room:room-compiler:2.5.2")

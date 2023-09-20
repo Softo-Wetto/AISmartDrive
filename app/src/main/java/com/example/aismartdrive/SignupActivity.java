@@ -37,6 +37,9 @@ public class SignupActivity extends AppCompatActivity {
         // Linking the views
         setViewIds();
 
+        // Initialize the CheckBox
+        adminCheckBox = findViewById(R.id.adminCheckBox);
+
         backButton.setOnClickListener(view -> {
             // Navigate back to the MainActivity
             Intent intent = new Intent(this, MainActivity.class);
@@ -53,17 +56,13 @@ public class SignupActivity extends AppCompatActivity {
 
             // Perform signup authentication logic here
             if (isValidCredentials(email, password, confirmPassword)) {
-                // Create a User object
-                User newUser = new User(name, email, phoneNumber, dateOfBirth, password);
-
                 // Check if the admin CheckBox is checked
                 boolean isAdmin = adminCheckBox.isChecked();
-                if (isAdmin) {
-                    SharedPrefManager.setAdmin(true); // Grant admin privileges
-                } else {
-                    SharedPrefManager.setAdmin(false); // Do not grant admin privileges
-                }
 
+                // Create a User object with the isAdmin parameter
+                User newUser = new User(name, email, phoneNumber, dateOfBirth, password, isAdmin);
+
+                // Insert the user into the database
                 userDao.insert(newUser);
 
                 // Successful signup, navigate to next activity or perform necessary actions
@@ -77,7 +76,6 @@ public class SignupActivity extends AppCompatActivity {
                 Toast.makeText(SignupActivity.this, "Invalid Credentials", Toast.LENGTH_SHORT).show();
             }
         });
-        adminCheckBox = findViewById(R.id.adminCheckBox); // Initialize the CheckBox
     }
 
     private void setViewIds() {
@@ -120,3 +118,6 @@ public class SignupActivity extends AppCompatActivity {
         return isValid;
     }
 }
+
+
+

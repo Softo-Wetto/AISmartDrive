@@ -12,13 +12,23 @@ public class User {
     private String phoneNumber;
     private String dateOfBirth;
     private String password;
+    private boolean isAdmin;
 
-    public User(String name, String email, String phoneNumber, String dateOfBirth, String password) {
+    public User(String name, String email, String phoneNumber, String dateOfBirth, String password, boolean isAdmin) {
         this.name = name;
         this.email = email;
         this.phoneNumber = phoneNumber;
         this.dateOfBirth = dateOfBirth;
         this.password = password;
+        this.isAdmin = isAdmin;
+    }
+
+    public boolean isAdmin() {
+        return isAdmin;
+    }
+
+    public void setAdmin(boolean admin) {
+        isAdmin = admin;
     }
 
     public String getName() {
@@ -41,7 +51,9 @@ public class User {
         return phoneNumber;
     }
 
-    public void setPhoneNumber(String phoneNumber) { this.phoneNumber = phoneNumber; }
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
 
     public String getDateOfBirth() {
         return dateOfBirth;

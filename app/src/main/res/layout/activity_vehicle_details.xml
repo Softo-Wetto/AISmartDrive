@@ -12,6 +12,15 @@
         android:orientation="vertical"
         android:padding="16dp">
 
+        <Button
+            android:id="@+id/backButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Back"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginTop="1dp"/>
+
         <ImageView
             android:id="@+id/vehicleImageView"
             android:layout_width="100dp"
@@ -92,6 +101,16 @@
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp"/>
 
+        <Button
+            android:id="@+id/bookButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Book Car"
+            android:paddingStart="24dp"
+            android:paddingEnd="24dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="5dp"/>
+
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -146,14 +165,6 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
-
-        <Button
-            android:id="@+id/backButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Back"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="16dp"/>
 
     </LinearLayout>
 </ScrollView>

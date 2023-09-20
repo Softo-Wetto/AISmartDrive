@@ -7,11 +7,31 @@
     android:gravity="center"
     android:padding="16dp">
 
+    <Button
+        android:id="@+id/backButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Back"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="-150dp"
+        android:layout_marginStart="-140dp"/>
+
+    <ImageView
+        android:id="@+id/artificalvehicleImage"
+        android:layout_width="180dp"
+        android:layout_height="180dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginBottom="1dp"
+        android:src="@drawable/userprofile" />
+
     <TextView
         android:id="@+id/nameTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Name"
+        android:layout_marginTop="30dp"
+        android:layout_marginBottom="5dp"
         android:textSize="18sp" />
 
     <TextView
@@ -19,6 +39,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Email"
+        android:layout_marginBottom="5dp"
         android:textSize="18sp" />
 
     <TextView
@@ -26,6 +47,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Date of Birth"
+        android:layout_marginBottom="5dp"
         android:textSize="18sp" />
 
     <TextView
@@ -33,5 +55,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Phone Number"
+        android:layout_marginBottom="5dp"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/statusTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Status"
+        android:layout_marginBottom="5dp"
         android:textSize="18sp" />
 </LinearLayout>

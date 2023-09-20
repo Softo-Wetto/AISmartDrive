@@ -16,7 +16,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.LiveData;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.room.Room;
 
+import com.example.aismartdrive.DB.AppDatabase;
+import com.example.aismartdrive.DB.user.User;
 import com.example.aismartdrive.DB.vehicle.Vehicle;
 import com.example.aismartdrive.DB.vehicle.VehicleDao;
 import com.example.aismartdrive.DB.sensor.AccelerometerData;
@@ -34,11 +37,17 @@ public class VehicleListActivity extends AppCompatActivity {
     private VehicleAdapter vehicleAdapter;
     private Intent serviceIntent;
     private SensorDataReceiver dataReceiver;
+    private AppDatabase appDatabase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_vehicle_list);
+
+        // Initialize Room database
+        appDatabase = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "user-database")
+                .allowMainThreadQueries()
+                .build();
 
         viewBinding();
         initialising();
@@ -98,16 +107,29 @@ public class VehicleListActivity extends AppCompatActivity {
     }
 
     private void manageRoleBasedFeatures() {
-        //Add Vehicle Button Show or don't show based on user role
-        if (SharedPrefManager.isAdmin()) {
+        User loggedInUser = getUserInformation();
+
+        if (loggedInUser != null && loggedInUser.isAdmin()) {
+            // User is an admin, show the "Add Vehicle" button
             btnAddNewVehicle.setVisibility(View.VISIBLE);
             btnAddNewVehicle.setOnClickListener(view -> {
                 manageNewVehicleFunctionality();
             });
         } else {
+            // User is not an admin, hide the "Add Vehicle" button
             btnAddNewVehicle.setVisibility(View.GONE);
         }
     }
+
+    private User getUserInformation() {
+        // Assuming the user is already logged in, retrieve user information based on the logged-in email
+        String loggedInEmail = SharedPrefManager.getUserEmail(); // You need to implement this method
+
+        // Retrieve user information from the database
+        User user = appDatabase.userDao().getUserByEmail(loggedInEmail);
+        return user;
+    }
+
 
     @SuppressLint("UnspecifiedRegisterReceiverFlag")
     private void manageSensorServices() {
