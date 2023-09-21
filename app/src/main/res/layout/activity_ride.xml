@@ -1,0 +1,103 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".RideActivity">
+
+    <TextView
+        android:id="@+id/vehicleTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="You are in a vehicle!"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:textSize="20sp"
+        android:layout_marginBottom="10dp" />
+
+    <TextView
+        android:id="@+id/sourceTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Source: "
+        android:layout_below="@id/vehicleTextView"
+        android:layout_centerHorizontal="true"
+        android:textSize="18sp"
+        android:layout_marginTop="10dp" />
+
+    <TextView
+        android:id="@+id/destinationTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Destination: "
+        android:layout_below="@id/sourceTextView"
+        android:layout_centerHorizontal="true"
+        android:textSize="18sp"
+        android:layout_marginTop="10dp" />
+
+    <TextView
+        android:id="@+id/distanceTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Distance: "
+        android:layout_below="@id/destinationTextView"
+        android:layout_centerHorizontal="true"
+        android:textSize="18sp"
+        android:layout_marginTop="10dp" />
+
+    <TextView
+        android:id="@+id/timeTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Time: "
+        android:layout_below="@id/distanceTextView"
+        android:layout_centerHorizontal="true"
+        android:textSize="18sp"
+        android:layout_marginTop="10dp" />
+
+    <TextView
+        android:id="@+id/priceTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Price: "
+        android:layout_below="@id/timeTextView"
+        android:layout_centerHorizontal="true"
+        android:textSize="18sp"
+        android:layout_marginTop="10dp" />
+
+    <com.google.android.gms.maps.MapView
+        android:id="@+id/mapView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_below="@id/destinationTextView"
+        android:layout_above="@id/buttonLayout"
+        android:layout_marginTop="110dp"
+        android:layout_marginBottom="16dp"/>
+
+    <LinearLayout
+        android:id="@+id/buttonLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal"
+        android:gravity="center">
+
+        <Button
+            android:id="@+id/finishButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Finish Ride"
+            android:layout_marginBottom="16dp"
+            android:layout_marginRight="20dp"/>
+
+        <Button
+            android:id="@+id/calculateRouteButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Emergency"
+            android:layout_marginBottom="16dp" />
+
+    </LinearLayout>
+
+</RelativeLayout>

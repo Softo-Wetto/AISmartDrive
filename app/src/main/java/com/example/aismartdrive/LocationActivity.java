@@ -1,118 +1,155 @@
 package com.example.aismartdrive;
 
-import android.content.pm.PackageManager;
+import android.content.Intent;
+import android.location.Address;
+import android.location.Geocoder;
 import android.location.Location;
-import android.location.LocationListener;
-import android.location.LocationManager;
 import android.os.Bundle;
-import android.util.Log;
-import android.widget.TextView;
-
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
+import com.google.android.gms.maps.*;
+import com.google.android.gms.maps.model.*;
+import java.io.IOException;
+import java.util.List;
 
-import com.google.android.gms.maps.CameraUpdateFactory;
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.MapView;
-import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
-
-public class LocationActivity extends AppCompatActivity implements LocationListener, OnMapReadyCallback {
-
-    private TextView locationTextView;
-    private LocationManager locationManager;
+public class LocationActivity extends AppCompatActivity implements OnMapReadyCallback {
+    private EditText sourceEditText, destinationEditText;
+    private Button calculateRouteButton, bookingButton;
     private GoogleMap googleMap;
-    private MapView mapView;
-    private LatLng sourceLatLng; // Replace with your source coordinates
-    private LatLng destinationLatLng; // Replace with your destination coordinates
+    private MapView mapView; // Declare the MapView instance here
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_location);
 
-        locationTextView = findViewById(R.id.locationTextView);
+        mapView = findViewById(R.id.mapView);
+        sourceEditText = findViewById(R.id.sourceEditText);
+        destinationEditText = findViewById(R.id.destinationEditText);
+        calculateRouteButton = findViewById(R.id.calculateRouteButton);
 
-        // Get the location manager
-        locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+        bookingButton = findViewById(R.id.bookingButton); // Initialize the button
+        bookingButton.setVisibility(View.GONE); // Initially hide the button
+
 
         // Initialize the mapView and get a reference to it
-        mapView = findViewById(R.id.mapView);
+        MapView mapView = findViewById(R.id.mapView);
         mapView.onCreate(savedInstanceState);
         mapView.getMapAsync(this);
-    }
+        calculateRouteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String sourceAddress = sourceEditText.getText().toString();
+                String destinationAddress = destinationEditText.getText().toString();
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        // Request location updates from the GPS provider
-        if (locationManager != null) {
-            if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
-                    ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                // Handle permissions here if needed
-                return;
+                // Use geocoding to convert source and destination addresses to LatLng
+                LatLng sourceLatLng = getLatLngFromAddress(sourceAddress);
+                LatLng destinationLatLng = getLatLngFromAddress(destinationAddress);
+
+                // Calculate and display the route
+                if (sourceLatLng != null && destinationLatLng != null) {
+                    drawRoute(sourceLatLng, destinationLatLng);
+                    // Show the "booking" button
+                    bookingButton.setVisibility(View.VISIBLE);
+                }
             }
-            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 5000, 10, this);
-        }
+        });
+        bookingButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Get the source and destination information
+                String sourceAddress = sourceEditText.getText().toString();
+                String destinationAddress = destinationEditText.getText().toString();
+                // Get the source and destination coordinates
+                LatLng sourceLatLng = getLatLngFromAddress(sourceAddress);
+                LatLng destinationLatLng = getLatLngFromAddress(destinationAddress);
+                // Create an Intent to start RideActivity
+                Intent intent = new Intent(LocationActivity.this, RideActivity.class);
+                // Put the source and destination information as extras in the intent
+                intent.putExtra("sourceAddress", sourceAddress);
+                intent.putExtra("destinationAddress", destinationAddress);
+                // Put the source and destination coordinates as extras in the intent
+                intent.putExtra("sourceLatLng", sourceLatLng);
+                intent.putExtra("destinationLatLng", destinationLatLng);
+                // Start RideActivity with the intent
+                startActivity(intent);
+            }
+        });
     }
 
-    @Override
-    protected void onPause() {
-        super.onPause();
-        // Stop receiving location updates when the activity is paused
-        if (locationManager != null) {
-            locationManager.removeUpdates(this);
-        }
-    }
-
-    @Override
-    public void onLocationChanged(@NonNull Location location) {
-        // Handle location changes and display the latitude and longitude
-        double latitude = location.getLatitude();
-        double longitude = location.getLongitude();
-
-        // Update the UI with the location information
-        locationTextView.setText("Latitude: " + latitude + "\nLongitude: " + longitude);
-
-        // Add a log statement to verify that this method is called
-        Log.d("LocationActivity", "Location updated: " + latitude + ", " + longitude);
-
-        // You can update the source coordinates here as needed
-        sourceLatLng = new LatLng(latitude, longitude);
-    }
-
-    // Implement the OnMapReadyCallback
     @Override
     public void onMapReady(GoogleMap googleMap) {
         this.googleMap = googleMap;
+        googleMap.getUiSettings().setZoomControlsEnabled(true);
+    }
 
-        // Add a marker for the source location
-        if (sourceLatLng != null) {
+    // Helper method to convert address to LatLng
+    private LatLng getLatLngFromAddress(String address) {
+        Geocoder geocoder = new Geocoder(this);
+        try {
+            List<Address> addresses = geocoder.getFromLocationName(address, 1);
+            if (!addresses.isEmpty()) {
+                Address firstAddress = addresses.get(0);
+                return new LatLng(firstAddress.getLatitude(), firstAddress.getLongitude());
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    // Helper method to draw the route on the map
+    private void drawRoute(LatLng sourceLatLng, LatLng destinationLatLng) {
+        if (googleMap != null) {
+            googleMap.clear();
+
+            // Add markers for source and destination
             googleMap.addMarker(new MarkerOptions().position(sourceLatLng).title("Source"));
-            googleMap.moveCamera(CameraUpdateFactory.newLatLng(sourceLatLng));
-        }
-
-        // Add a marker for the destination location
-        if (destinationLatLng != null) {
             googleMap.addMarker(new MarkerOptions().position(destinationLatLng).title("Destination"));
+
+            // Create and display the route
+            PolylineOptions polylineOptions = new PolylineOptions()
+                    .add(sourceLatLng)
+                    .add(destinationLatLng)
+                    .color(getResources().getColor(R.color.red))
+                    .width(5);
+            googleMap.addPolyline(polylineOptions);
+
+            // Move camera to fit both markers and route
+            LatLngBounds.Builder builder = new LatLngBounds.Builder();
+            builder.include(sourceLatLng);
+            builder.include(destinationLatLng);
+            LatLngBounds bounds = builder.build();
+            CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngBounds(bounds, 100);
+            googleMap.animateCamera(cameraUpdate);
         }
     }
-
     @Override
-    public void onStatusChanged(String provider, int status, Bundle extras) {
-        // Handle status changes if needed
+    public void onResume() {
+        super.onResume();
+        mapView.onResume();
     }
 
     @Override
-    public void onProviderEnabled(String provider) {
-        // Handle when the location provider is enabled
+    public void onPause() {
+        super.onPause();
+        mapView.onPause();
     }
 
     @Override
-    public void onProviderDisabled(String provider) {
-        // Handle when the location provider is disabled
+    public void onDestroy() {
+        super.onDestroy();
+        mapView.onDestroy();
+    }
+
+    @Override
+    public void onLowMemory() {
+        super.onLowMemory();
+        mapView.onLowMemory();
     }
 }
 
