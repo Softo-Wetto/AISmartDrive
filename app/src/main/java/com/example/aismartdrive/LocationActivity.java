@@ -1,5 +1,6 @@
 package com.example.aismartdrive;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.location.Address;
 import android.location.Geocoder;
@@ -8,6 +9,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
@@ -18,14 +21,22 @@ import java.util.List;
 
 public class LocationActivity extends AppCompatActivity implements OnMapReadyCallback {
     private EditText sourceEditText, destinationEditText;
-    private Button calculateRouteButton, bookingButton;
+    private Button calculateRouteButton, bookingButton, backButton;
     private GoogleMap googleMap;
     private MapView mapView; // Declare the MapView instance here
 
+    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_location);
+
+        String vehicleName = getIntent().getStringExtra("vehicleName");
+
+        if (vehicleName != null) {
+            TextView vehicleNameTextView = findViewById(R.id.vehicleNameTextView);
+            vehicleNameTextView.setText(vehicleName);
+        }
 
         mapView = findViewById(R.id.mapView);
         sourceEditText = findViewById(R.id.sourceEditText);
@@ -34,6 +45,7 @@ public class LocationActivity extends AppCompatActivity implements OnMapReadyCal
 
         bookingButton = findViewById(R.id.bookingButton); // Initialize the button
         bookingButton.setVisibility(View.GONE); // Initially hide the button
+        backButton = findViewById(R.id.backButton);
 
 
         // Initialize the mapView and get a reference to it
@@ -67,6 +79,10 @@ public class LocationActivity extends AppCompatActivity implements OnMapReadyCal
                 // Get the source and destination coordinates
                 LatLng sourceLatLng = getLatLngFromAddress(sourceAddress);
                 LatLng destinationLatLng = getLatLngFromAddress(destinationAddress);
+
+                // Retrieve the vehicleName from the previous activity
+                String vehicleName = getIntent().getStringExtra("vehicleName");
+
                 // Create an Intent to start RideActivity
                 Intent intent = new Intent(LocationActivity.this, RideActivity.class);
                 // Put the source and destination information as extras in the intent
@@ -75,9 +91,14 @@ public class LocationActivity extends AppCompatActivity implements OnMapReadyCal
                 // Put the source and destination coordinates as extras in the intent
                 intent.putExtra("sourceLatLng", sourceLatLng);
                 intent.putExtra("destinationLatLng", destinationLatLng);
+                // Put the vehicleName as an extra in the intent
+                intent.putExtra("vehicleName", vehicleName);
                 // Start RideActivity with the intent
                 startActivity(intent);
             }
+        });
+        backButton.setOnClickListener(view -> {
+            finish();
         });
     }
 

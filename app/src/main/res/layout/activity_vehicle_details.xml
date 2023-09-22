@@ -17,9 +17,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Back"
+            android:layout_alignParentEnd="true"
             android:layout_alignParentTop="true"
-            android:layout_alignParentStart="true"
-            android:layout_marginTop="1dp"/>
+            android:layout_marginEnd="145dp"
+            android:layout_marginTop="0dp" />
 
         <ImageView
             android:id="@+id/vehicleImageView"
@@ -103,14 +104,14 @@
 
         <Button
             android:id="@+id/bookButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="400dp"
+            android:layout_height="55dp"
             android:text="Book Car"
             android:elevation="4dp"
             android:paddingStart="34dp"
             android:paddingEnd="34dp"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="5dp"/>
+            android:layout_marginTop="10dp"/>
 
 
         <LinearLayout

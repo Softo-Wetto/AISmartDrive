@@ -12,16 +12,28 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Back"
+        android:layout_alignParentEnd="true"
         android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="-150dp"
-        android:layout_marginStart="-140dp"/>
+        android:layout_marginEnd="145dp"
+        android:layout_marginTop="-5dp" />
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginHorizontal="8dp"
+        android:gravity="center_vertical"
+        android:text="User Profile"
+        android:textColor="#000000"
+        android:textSize="30sp"
+        android:textStyle="bold|italic" />
 
     <ImageView
         android:id="@+id/artificalvehicleImage"
         android:layout_width="180dp"
         android:layout_height="180dp"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="10dp"
         android:layout_marginBottom="1dp"
         android:src="@drawable/userprofile" />
 
@@ -31,8 +43,9 @@
         android:layout_height="wrap_content"
         android:text="Name"
         android:layout_marginTop="30dp"
-        android:layout_marginBottom="5dp"
-        android:textSize="18sp" />
+        android:layout_marginBottom="10dp"
+        android:textStyle="bold|italic"
+        android:textSize="25sp" />
 
     <TextView
         android:id="@+id/emailTextView"
@@ -40,7 +53,8 @@
         android:layout_height="wrap_content"
         android:text="Email"
         android:layout_marginBottom="5dp"
-        android:textSize="18sp" />
+        android:textStyle="bold"
+        android:textSize="20sp" />
 
     <TextView
         android:id="@+id/dateOfBirthTextView"
@@ -65,4 +79,88 @@
         android:text="Status"
         android:layout_marginBottom="5dp"
         android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/latestReviewTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
+        android:layout_marginHorizontal="8dp"
+        android:gravity="center_vertical"
+        android:text="Latest Review:"
+        android:textColor="#000000"
+        android:textSize="30sp"
+        android:textStyle="bold|italic" />
+
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:stretchColumns="1">
+
+        <!-- Table Row for Vehicle Name -->
+        <TableRow>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Vehicle Name:"
+                android:paddingEnd="16dp"
+                android:paddingBottom="8dp"
+                android:gravity="end"
+                android:layout_gravity="end" />
+
+            <TextView
+                android:id="@+id/vehicleNameTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="start" />
+        </TableRow>
+
+        <!-- Table Row for Rating -->
+        <TableRow>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Rating:"
+                android:paddingEnd="16dp"
+                android:paddingBottom="8dp"
+                android:gravity="end"
+                android:layout_gravity="end" />
+
+            <TextView
+                android:id="@+id/ratingTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="start" />
+        </TableRow>
+
+        <!-- Table Row for Comment -->
+        <TableRow>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Comment:"
+                android:paddingEnd="16dp"
+                android:paddingBottom="8dp"
+                android:gravity="end"
+                android:layout_gravity="end" />
+
+            <TextView
+                android:id="@+id/commentTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="start" />
+        </TableRow>
+    </TableLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/reviewsRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp" />
 </LinearLayout>

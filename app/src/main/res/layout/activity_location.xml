@@ -11,17 +11,17 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Back"
+        android:layout_alignParentEnd="true"
         android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="1dp"
-        android:layout_marginBottom="16dp"
-        android:layout_marginStart="-140dp"/>
+        android:layout_marginEnd="135dp"
+        android:layout_marginTop="0dp" />
 
     <TextView
         android:id="@+id/title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="1dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
         android:layout_marginHorizontal="8dp"
         android:gravity="center_vertical"
         android:text="Choose Location"
@@ -33,10 +33,22 @@
         android:id="@+id/TextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello Everybody"
+        android:layout_marginBottom="10dp"
+        android:text="Choose Source and Destination for the vehicle:"
+        android:gravity="center"
+        android:textColor="#4C0D0D"
         android:textSize="18sp"
-        android:textStyle="bold"
-        android:layout_marginBottom="16dp" />
+        android:textStyle="bold"/>
+
+    <TextView
+        android:id="@+id/vehicleNameTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Vehicle"
+        android:gravity="center"
+        android:textColor="#F10707"
+        android:textSize="18sp"
+        android:textStyle="bold"/>
 
     <!-- Add EditText fields for source and destination -->
     <EditText

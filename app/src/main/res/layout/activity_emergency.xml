@@ -1,0 +1,136 @@
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".EmergencyActivity">
+
+    <!-- Title TextView -->
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:text="Manuel Mode"
+        android:textColor="#000000"
+        android:textSize="36sp"
+        android:textStyle="bold|italic"/>
+
+    <!-- Section Headers -->
+    <TextView
+        android:id="@+id/TextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/title"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="0dp"
+        android:text="You are in EMERGENCY mode. Use your phones gyroscope functionality to control the vehicle:"
+        android:textColor="#4C0D0D"
+        android:gravity="center"
+        android:textSize="18sp"
+        android:textStyle="bold"/>
+
+    <TextView
+        android:id="@+id/TextView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/TextView"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:gravity="center"
+        android:text="Open the Virtual Sensor to move. For emergency, distance, time, price is temporarily stopped"
+        android:textColor="#F10707"
+        android:textSize="18sp"
+        android:textStyle="bold"/>
+
+    <!-- Labels for Source, Destination, Distance, Time, Price -->
+    <TextView
+        android:id="@+id/sourceTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/TextView2"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:textSize="16sp"
+        android:text="Source:" />
+
+    <TextView
+        android:id="@+id/destinationTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/sourceTextView"
+        android:layout_centerHorizontal="true"
+        android:textSize="16sp"
+        android:text="Destination:" />
+
+    <TextView
+        android:id="@+id/distanceTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/destinationTextView"
+        android:layout_centerHorizontal="true"
+        android:textSize="16sp"
+        android:text="Distance:" />
+
+    <TextView
+        android:id="@+id/timeTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/distanceTextView"
+        android:layout_centerHorizontal="true"
+        android:textSize="16sp"
+        android:text="Time:" />
+
+    <TextView
+        android:id="@+id/priceTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/timeTextView"
+        android:layout_centerHorizontal="true"
+        android:textSize="16sp"
+        android:text="Price:" />
+
+    <!-- Movement and Compass Indicators -->
+    <TextView
+        android:id="@+id/movementTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/priceTextView"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:text="Vehicle is not moving"
+        android:textColor="#FF0000"
+        android:textSize="18sp"/>
+
+    <TextView
+        android:id="@+id/compassTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/movementTextView"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="5dp"
+        android:text="Direction: N"
+        android:textSize="18sp" />
+
+    <!-- MapView -->
+    <com.google.android.gms.maps.MapView
+        android:id="@+id/mapView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/movementTextView"
+        android:layout_marginTop="40dp"
+        android:layout_marginBottom="65dp"/>
+
+    <!-- Finish Ride Button -->
+    <Button
+        android:id="@+id/finishRideButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Finish Ride"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="10dp"/>
+
+</RelativeLayout>

@@ -13,15 +13,27 @@ public class User {
     private String dateOfBirth;
     private String password;
     private boolean isAdmin;
+    private String vehicleName;
+    private float rating;
+    private String comment;
 
-    public User(String name, String email, String phoneNumber, String dateOfBirth, String password, boolean isAdmin) {
+    public User() {
+        // Default constructor code here
+    }
+
+    public User(String name, String email, String phoneNumber, String dateOfBirth, String password, boolean isAdmin, String vehicleName,
+    float rating, String comment) {
         this.name = name;
         this.email = email;
         this.phoneNumber = phoneNumber;
         this.dateOfBirth = dateOfBirth;
         this.password = password;
         this.isAdmin = isAdmin;
+        this.vehicleName = vehicleName;
+        this.rating = rating;
+        this.comment = comment;
     }
+
 
     public boolean isAdmin() {
         return isAdmin;
@@ -69,5 +81,29 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getVehicleName() {
+        return vehicleName;
+    }
+
+    public void setVehicleName(String vehicleName) {
+        this.vehicleName = vehicleName;
+    }
+
+    public float getRating() {
+        return rating;
+    }
+
+    public void setRating(float rating) {
+        this.rating = rating;
+    }
+
+    public String getComment() {
+        return comment;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
     }
 }

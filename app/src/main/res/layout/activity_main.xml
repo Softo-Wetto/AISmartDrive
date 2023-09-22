@@ -25,6 +25,14 @@
         android:textColor="#000000"
         android:textSize="36sp"
         android:textStyle="bold|italic" />
+    <TextView
+        android:id="@+id/TextView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Where Intelligence Meets the Road"
+        android:textColor="#F10707"
+        android:textSize="20sp"
+        android:textStyle="bold|italic"/>
 
     <LinearLayout
         android:id="@+id/button_container"

@@ -1,0 +1,309 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="1dp"
+        android:layout_marginHorizontal="8dp"
+        android:gravity="center_vertical"
+        android:text="You have Arrived!"
+        android:textColor="#000000"
+        android:textSize="36sp"
+        android:layout_gravity="center"
+        android:textStyle="bold|italic" />
+
+    <TextView
+        android:id="@+id/TextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Payment Section. Your Summary:"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:layout_gravity="center"
+        android:layout_marginBottom="16dp" />
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:background="@drawable/border_background">
+
+        <!-- Table Row 0: Vehicle Name -->
+        <TableRow>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Vehicle Name:"
+                android:paddingEnd="16dp"
+                android:paddingBottom="8dp"
+                android:gravity="end"
+                android:layout_gravity="end"
+                android:textSize="16dp"
+                android:textStyle="bold"
+                android:layout_weight="1" />
+
+            <TextView
+                android:id="@+id/vehicleNameTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="16dp"
+                android:textStyle="bold"
+                android:layout_weight="2" />
+        </TableRow>
+
+        <!-- Table Row 1: Source Address -->
+        <TableRow>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Source Address:"
+                android:paddingEnd="16dp"
+                android:paddingBottom="8dp"
+                android:gravity="end"
+                android:layout_gravity="end"
+                android:textSize="16dp"
+                android:textStyle="bold"
+                android:layout_weight="1" />
+
+            <TextView
+                android:id="@+id/sourceAddressTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="16dp"
+                android:textStyle="bold"
+                android:layout_weight="2" />
+        </TableRow>
+
+        <!-- Table Row 2: Destination Address -->
+        <TableRow>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Destination Address:"
+                android:paddingEnd="16dp"
+                android:paddingBottom="8dp"
+                android:gravity="end"
+                android:layout_gravity="end"
+                android:textSize="16dp"
+                android:textStyle="bold"
+                android:layout_weight="1" />
+
+            <TextView
+                android:id="@+id/destinationAddressTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="16dp"
+                android:textStyle="bold"
+                android:layout_weight="2" />
+        </TableRow>
+
+        <!-- Table Row 3: Distance -->
+        <TableRow>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Distance:"
+                android:paddingEnd="16dp"
+                android:paddingBottom="8dp"
+                android:gravity="end"
+                android:layout_gravity="end"
+                android:textSize="16dp"
+                android:textStyle="bold"
+                android:layout_weight="1" />
+
+            <TextView
+                android:id="@+id/distanceTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="16dp"
+                android:textStyle="bold"
+                android:layout_weight="2" />
+        </TableRow>
+
+        <!-- Table Row 4: Time -->
+        <TableRow>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Time:"
+                android:paddingEnd="16dp"
+                android:paddingBottom="8dp"
+                android:gravity="end"
+                android:layout_gravity="end"
+                android:textSize="16dp"
+                android:textStyle="bold"
+                android:layout_weight="1" />
+
+            <TextView
+                android:id="@+id/timeTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="16dp"
+                android:textStyle="bold"
+                android:layout_weight="2" />
+        </TableRow>
+
+        <!-- Table Row 5: Price -->
+        <TableRow>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Price:"
+                android:paddingEnd="16dp"
+                android:paddingBottom="8dp"
+                android:gravity="end"
+                android:layout_gravity="end"
+                android:textSize="16dp"
+                android:textStyle="bold"
+                android:layout_weight="1" />
+
+            <TextView
+                android:id="@+id/priceTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="16dp"
+                android:textStyle="bold"
+                android:layout_weight="2" />
+        </TableRow>
+    </TableLayout>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/titleCard"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="1dp"
+            android:layout_marginHorizontal="8dp"
+            android:gravity="center_vertical"
+            android:text="Insert Details"
+            android:textColor="#000000"
+            android:textSize="36sp"
+            android:layout_gravity="center"
+            android:textStyle="bold|italic" />
+
+        <TextView
+            android:id="@+id/TextView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Fill in before proceeding:"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:layout_gravity="center"
+            android:layout_marginBottom="16dp" />
+
+        <!-- Payment Information -->
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:background="@drawable/border_background">
+
+            <TableRow>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Full Name:"
+                    android:paddingEnd="16dp"
+                    android:paddingBottom="8dp"
+                    android:gravity="end"
+                    android:layout_gravity="end"
+                    android:textSize="16dp"
+                    android:textStyle="bold"
+                    android:layout_weight="1" />
+
+                <EditText
+                    android:id="@+id/nameEditText"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:inputType="text"
+                    android:hint="Enter Full Name" />
+            </TableRow>
+
+            <!-- Table Row 2: Card Number Input -->
+            <TableRow>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Card Number:"
+                    android:paddingEnd="16dp"
+                    android:paddingBottom="8dp"
+                    android:gravity="end"
+                    android:layout_gravity="end"
+                    android:textSize="16dp"
+                    android:textStyle="bold"
+                    android:layout_weight="1" />
+
+                <EditText
+                    android:id="@+id/cardNumberEditText"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:inputType="number"
+                    android:hint="Enter Card Number" />
+            </TableRow>
+
+            <!-- Table Row 3: Expiration Date and CVV Input -->
+            <TableRow>
+                <!-- Expiration Date -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Expiration Date:"
+                    android:paddingEnd="16dp"
+                    android:paddingBottom="8dp"
+                    android:gravity="end"
+                    android:layout_gravity="end"
+                    android:textSize="16dp"
+                    android:textStyle="bold"
+                    android:layout_weight="1" />
+
+                <EditText
+                    android:id="@+id/expirationDateEditText"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:hint="MM/YYYY" />
+
+                <!-- CVV -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="CVV:"
+                    android:paddingEnd="16dp"
+                    android:paddingBottom="8dp"
+                    android:gravity="end"
+                    android:layout_gravity="end"
+                    android:textSize="16dp"
+                    android:textStyle="bold"
+                    android:layout_weight="1" />
+
+                <EditText
+                    android:id="@+id/cvvEditText"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:inputType="number"
+                    android:hint="CVV" />
+            </TableRow>
+        </TableLayout>
+
+        <!-- Finish Payment Button -->
+        <Button
+            android:id="@+id/finishPaymentButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="26dp"
+            android:text="Finish Payment" />
+    </LinearLayout>
+</LinearLayout>

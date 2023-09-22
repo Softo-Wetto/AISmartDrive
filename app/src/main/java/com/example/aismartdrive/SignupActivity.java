@@ -13,7 +13,6 @@ import androidx.room.Room;
 import com.example.aismartdrive.DB.AppDatabase;
 import com.example.aismartdrive.DB.user.User;
 import com.example.aismartdrive.DB.user.UserDao;
-import com.example.aismartdrive.Utils.SharedPrefManager;
 
 public class SignupActivity extends AppCompatActivity {
 
@@ -60,8 +59,8 @@ public class SignupActivity extends AppCompatActivity {
                 boolean isAdmin = adminCheckBox.isChecked();
 
                 // Create a User object with the isAdmin parameter
-                User newUser = new User(name, email, phoneNumber, dateOfBirth, password, isAdmin);
-
+                float rating = 0;
+                User newUser = new User(name, email, phoneNumber, dateOfBirth, password, isAdmin, null, rating, null);
                 // Insert the user into the database
                 userDao.insert(newUser);
 

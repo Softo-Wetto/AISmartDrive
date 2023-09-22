@@ -34,9 +34,11 @@
         android:id="@+id/userNameTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Welcome, [User's Name]"
+        android:text="Welcome, [User's Name]. How can we assist?"
+        android:gravity="center"
         android:textSize="18sp"
         android:textStyle="bold"
+        android:textColor="#009688"
         android:layout_marginBottom="16dp" />
 
     <Button

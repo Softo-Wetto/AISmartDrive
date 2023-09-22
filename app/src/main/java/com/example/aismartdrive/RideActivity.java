@@ -4,6 +4,8 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -28,6 +30,7 @@ public class RideActivity extends AppCompatActivity implements OnMapReadyCallbac
     private double currentDistance = 0.0;
     private double currentTime = 0;
     private double currentPrice = 0.0;
+    private boolean rideFinished = false;
 
     @SuppressLint("SetTextI18n")
     @Override
@@ -56,13 +59,39 @@ public class RideActivity extends AppCompatActivity implements OnMapReadyCallbac
         sourceTextView.setText("Source: " + sourceAddress);
         destinationTextView.setText("Destination: " + destinationAddress);
 
-        // You can also use sourceLatLng and destinationLatLng as needed
+        Button finishButton = findViewById(R.id.finishButton);
+        Button emergencyButton = findViewById(R.id.emergencyButton);
+        finishButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // Stop the timer when the "Finish Ride" button is clicked
+                rideFinished = true;
+
+                // Go to PaymentActivity with data
+                goToPaymentActivity();
+            }
+        });
+
+        emergencyButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // Stop the timer when the "Emergency" button is clicked
+                rideFinished = true;
+
+                // Go to EmergencyActivity with data
+                goToEmergencyActivity();
+            }
+        });
+
         startLiveDataUpdates();
     }
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
         this.googleMap = googleMap;
+
+        // Enable zoom controls UI
+        googleMap.getUiSettings().setZoomControlsEnabled(true);
 
         // Add markers for source and destination
         LatLng sourceLatLng = getIntent().getParcelableExtra("sourceLatLng");
@@ -99,23 +128,65 @@ public class RideActivity extends AppCompatActivity implements OnMapReadyCallbac
         timer.scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
-                // Simulate live data updates
-                currentDistance += 0.1393; // Increment distance by 0.1 km (adjust as needed)
-                currentTime += 0.1; // Increment time by 1 minute (adjust as needed)
-                currentPrice += 0.389; // Increment price by $1.5 (adjust as needed)
+                if (!rideFinished) { // Check if the ride is finished
+                    // Simulate live data updates
+                    currentDistance += 0.1393; // Increment distance by 0.1 km (adjust as needed)
+                    currentTime += 0.1; // Increment time by 1 minute (adjust as needed)
+                    currentPrice += 0.389; // Increment price by $1.5 (adjust as needed)
 
-                // Update the TextViews with live data
-                runOnUiThread(new Runnable() {
-                    @SuppressLint({"SetTextI18n", "DefaultLocale"})
-                    @Override
-                    public void run() {
-                        distanceTextView.setText("Distance: " + String.format("%.1f", currentDistance) + " km");
-                        timeTextView.setText("Time: " + String.format("%.0f", currentTime) + " mins");
-                        priceTextView.setText("Price: $" + String.format("%.2f", currentPrice));
-                    }
-                });
+                    // Update the TextViews with live data
+                    runOnUiThread(new Runnable() {
+                        @SuppressLint({"SetTextI18n", "DefaultLocale"})
+                        @Override
+                        public void run() {
+                            distanceTextView.setText("Distance: " + String.format("%.1f", currentDistance) + " km");
+                            timeTextView.setText("Time: " + String.format("%.0f", currentTime) + " mins");
+                            priceTextView.setText("Price: $" + String.format("%.2f", currentPrice));
+                        }
+                    });
+                }
             }
-        }, 0, 2000); // Update every 5 seconds (adjust as needed)
+        }, 0, 2000); // Update every 2 seconds (adjust as needed)
+    }
+
+    private void goToPaymentActivity() {
+        // Stop the timer when the ride is finished
+        rideFinished = true;
+        // Prepare data to send to PaymentActivity
+        String vehicleName = getIntent().getStringExtra("vehicleName");
+
+        Intent paymentIntent = new Intent(this, PaymentActivity.class);
+
+        paymentIntent.putExtra("sourceAddress", sourceTextView.getText().toString().replace("Source: ", ""));
+        paymentIntent.putExtra("destinationAddress", destinationTextView.getText().toString().replace("Destination: ", ""));
+        paymentIntent.putExtra("distance", currentDistance);
+        paymentIntent.putExtra("time", currentTime);
+        paymentIntent.putExtra("price", currentPrice);
+        paymentIntent.putExtra("vehicleName", vehicleName);
+
+        startActivity(paymentIntent);
+    }
+
+    private void goToEmergencyActivity() {
+        // Prepare data to send to EmergencyActivity
+        Intent emergencyIntent = new Intent(this, EmergencyActivity.class);
+
+        String vehicleName = getIntent().getStringExtra("vehicleName");
+
+        emergencyIntent.putExtra("sourceAddress", sourceTextView.getText().toString().replace("Source: ", ""));
+        emergencyIntent.putExtra("destinationAddress", destinationTextView.getText().toString().replace("Destination: ", ""));
+        emergencyIntent.putExtra("distance", currentDistance);
+        emergencyIntent.putExtra("time", currentTime);
+        emergencyIntent.putExtra("price", currentPrice);
+
+        // Also pass the sourceLatLng and destinationLatLng
+        LatLng sourceLatLng = getIntent().getParcelableExtra("sourceLatLng");
+        LatLng destinationLatLng = getIntent().getParcelableExtra("destinationLatLng");
+        emergencyIntent.putExtra("sourceLatLng", sourceLatLng);
+        emergencyIntent.putExtra("destinationLatLng", destinationLatLng);
+        emergencyIntent.putExtra("vehicleName", vehicleName);
+
+        startActivity(emergencyIntent);
     }
 
     @Override

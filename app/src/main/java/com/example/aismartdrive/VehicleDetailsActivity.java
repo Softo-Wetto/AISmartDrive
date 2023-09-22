@@ -59,7 +59,7 @@ public class VehicleDetailsActivity extends AppCompatActivity {
 
         // Initialize Room database
         appDatabase = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "user-database")
-                .allowMainThreadQueries() // For simplicity; consider using AsyncTask or LiveData
+                .allowMainThreadQueries()
                 .build();
 
         setViewIds();
@@ -76,9 +76,21 @@ public class VehicleDetailsActivity extends AppCompatActivity {
             startActivity(intent);
         });
         bookButton.setOnClickListener(view -> {
-            // Navigate back to the VehicleList
-            Intent intent = new Intent(this, LocationActivity.class);
-            startActivity(intent);
+            if (vehicle != null) {
+                String vehicleName = vehicle.getName();
+
+                // Create an Intent to start the next activity (LocationActivity)
+                Intent intent = new Intent(this, LocationActivity.class);
+
+                // Pass the vehicleName as an extra to the next activity
+                intent.putExtra("vehicleName", vehicleName);
+
+                // Start the next activity
+                startActivity(intent);
+            } else {
+                // Handle the case where vehicle data is not available
+                Toast.makeText(this, "Vehicle data not available", Toast.LENGTH_SHORT).show();
+            }
         });
     }
 
