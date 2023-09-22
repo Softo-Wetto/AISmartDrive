@@ -17,6 +17,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AISmartDrive"
         tools:targetApi="31">
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyCGywpetJpW4sXCun3JTySgHbGlw0sXajw" />
+
         <activity
             android:name=".EmergencyActivity"
             android:exported="false" />
@@ -29,11 +33,6 @@
         <activity
             android:name=".RideActivity"
             android:exported="false" />
-
-        <meta-data
-            android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyCGywpetJpW4sXCun3JTySgHbGlw0sXajw" />
-
         <activity
             android:name=".LocationActivity"
             android:exported="false" />
@@ -43,7 +42,6 @@
         <activity
             android:name=".HomeActivity"
             android:exported="false" />
-
         <service
             android:name=".SensorUtil.SensorService"
             android:enabled="true"

@@ -1,6 +1,7 @@
 package com.example.aismartdrive;
 
 import android.annotation.SuppressLint;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -79,14 +80,31 @@ public class VehicleDetailsActivity extends AppCompatActivity {
             if (vehicle != null) {
                 String vehicleName = vehicle.getName();
 
-                // Create an Intent to start the next activity (LocationActivity)
-                Intent intent = new Intent(this, LocationActivity.class);
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.setTitle("Confirmation")
+                        .setMessage("Are you sure you want to book this vehicle? You will not be able to go back.")
+                        .setPositiveButton("Book", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                // User clicked the "Book" button in the dialog
+                                // Create an Intent to start the next activity (LocationActivity)
+                                Intent intent = new Intent(VehicleDetailsActivity.this, LocationActivity.class);
 
-                // Pass the vehicleName as an extra to the next activity
-                intent.putExtra("vehicleName", vehicleName);
+                                // Pass the vehicleName as an extra to the next activity
+                                intent.putExtra("vehicleName", vehicleName);
 
-                // Start the next activity
-                startActivity(intent);
+                                // Start the next activity
+                                startActivity(intent);
+                            }
+                        })
+                        .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                // User clicked the "Cancel" button in the dialog
+                                // Do nothing, dialog will be dismissed
+                            }
+                        })
+                        .show();
             } else {
                 // Handle the case where vehicle data is not available
                 Toast.makeText(this, "Vehicle data not available", Toast.LENGTH_SHORT).show();

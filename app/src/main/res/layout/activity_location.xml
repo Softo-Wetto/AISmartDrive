@@ -6,16 +6,6 @@
     android:gravity="center"
     android:padding="16dp">
 
-    <Button
-        android:id="@+id/backButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Back"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginEnd="135dp"
-        android:layout_marginTop="0dp" />
-
     <TextView
         android:id="@+id/title"
         android:layout_width="wrap_content"
@@ -63,6 +53,20 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Enter Destination Location"
+        android:layout_marginTop="16dp" />
+
+    <EditText
+        android:id="@+id/dateEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter Date (YYYY-MM-DD)"
+        android:layout_marginTop="16dp" />
+
+    <EditText
+        android:id="@+id/timeEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter Time (HH:MM AM/PM)"
         android:layout_marginTop="16dp" />
 
     <!-- Add a "Calculate Route" button -->

@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -20,8 +21,8 @@ import java.io.IOException;
 import java.util.List;
 
 public class LocationActivity extends AppCompatActivity implements OnMapReadyCallback {
-    private EditText sourceEditText, destinationEditText;
-    private Button calculateRouteButton, bookingButton, backButton;
+    private EditText sourceEditText, destinationEditText, dateEditText, timeEditText;
+    private Button calculateRouteButton, bookingButton;
     private GoogleMap googleMap;
     private MapView mapView; // Declare the MapView instance here
 
@@ -41,32 +42,40 @@ public class LocationActivity extends AppCompatActivity implements OnMapReadyCal
         mapView = findViewById(R.id.mapView);
         sourceEditText = findViewById(R.id.sourceEditText);
         destinationEditText = findViewById(R.id.destinationEditText);
+        dateEditText = findViewById(R.id.dateEditText); // Initialize date EditText
+        timeEditText = findViewById(R.id.timeEditText); // Initialize time EditText
         calculateRouteButton = findViewById(R.id.calculateRouteButton);
 
-        bookingButton = findViewById(R.id.bookingButton); // Initialize the button
-        bookingButton.setVisibility(View.GONE); // Initially hide the button
-        backButton = findViewById(R.id.backButton);
-
+        bookingButton = findViewById(R.id.bookingButton);
+        bookingButton.setVisibility(View.GONE);
 
         // Initialize the mapView and get a reference to it
         MapView mapView = findViewById(R.id.mapView);
         mapView.onCreate(savedInstanceState);
         mapView.getMapAsync(this);
+
         calculateRouteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String sourceAddress = sourceEditText.getText().toString();
                 String destinationAddress = destinationEditText.getText().toString();
+                String date = dateEditText.getText().toString(); // Get date input
+                String time = timeEditText.getText().toString(); // Get time input
 
-                // Use geocoding to convert source and destination addresses to LatLng
-                LatLng sourceLatLng = getLatLngFromAddress(sourceAddress);
-                LatLng destinationLatLng = getLatLngFromAddress(destinationAddress);
+                if (sourceAddress.isEmpty() || destinationAddress.isEmpty() || date.isEmpty() || time.isEmpty()) {
+                    // Handle empty input fields
+                    Toast.makeText(LocationActivity.this, "Please fill in all fields", Toast.LENGTH_SHORT).show();
+                } else {
+                    // Use geocoding to convert source and destination addresses to LatLng
+                    LatLng sourceLatLng = getLatLngFromAddress(sourceAddress);
+                    LatLng destinationLatLng = getLatLngFromAddress(destinationAddress);
 
-                // Calculate and display the route
-                if (sourceLatLng != null && destinationLatLng != null) {
-                    drawRoute(sourceLatLng, destinationLatLng);
-                    // Show the "booking" button
-                    bookingButton.setVisibility(View.VISIBLE);
+                    // Calculate and display the route
+                    if (sourceLatLng != null && destinationLatLng != null) {
+                        drawRoute(sourceLatLng, destinationLatLng);
+                        // Show the "booking" button
+                        bookingButton.setVisibility(View.VISIBLE);
+                    }
                 }
             }
         });
@@ -96,9 +105,6 @@ public class LocationActivity extends AppCompatActivity implements OnMapReadyCal
                 // Start RideActivity with the intent
                 startActivity(intent);
             }
-        });
-        backButton.setOnClickListener(view -> {
-            finish();
         });
     }
 

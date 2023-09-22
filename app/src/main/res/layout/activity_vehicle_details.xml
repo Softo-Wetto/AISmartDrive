@@ -105,7 +105,7 @@
         <Button
             android:id="@+id/bookButton"
             android:layout_width="400dp"
-            android:layout_height="55dp"
+            android:layout_height="57dp"
             android:text="Book Car"
             android:elevation="4dp"
             android:paddingStart="34dp"
