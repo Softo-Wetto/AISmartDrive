@@ -30,29 +30,46 @@
         android:textSize="36sp"
         android:textStyle="bold|italic" />
 
-    <TextView
-        android:id="@+id/vehicleTextView"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="You are in a Vehicle:"
         android:layout_below="@id/title"
-        android:textColor="#033BFF"
-        android:layout_marginHorizontal="120dp"
+        android:orientation="horizontal"
+        android:gravity="center"
         android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"
-        android:textSize="18sp"
-        android:textStyle="bold"/>
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginBottom="10dp">
+
+        <TextView
+            android:id="@+id/vehicleTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="You are in a Vehicle:"
+            android:textColor="#033BFF"
+            android:textSize="18sp"
+            android:textStyle="bold"/>
+
+        <TextView
+            android:id="@+id/tooFastTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text=" Moving Too Fast"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:textColor="#000BE6" />
+    </LinearLayout>
 
     <TextView
         android:id="@+id/sourceTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Source: "
-        android:layout_below="@id/vehicleTextView"
+        android:layout_below="@id/title"
         android:layout_centerHorizontal="true"
         android:textSize="18sp"
-        android:layout_marginTop="5dp" />
+        android:layout_marginTop="50dp" />
 
     <TextView
         android:id="@+id/destinationTextView"

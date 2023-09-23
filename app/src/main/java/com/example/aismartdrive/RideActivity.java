@@ -1,15 +1,21 @@
 package com.example.aismartdrive;
 
 import android.annotation.SuppressLint;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.aismartdrive.DB.sensor.AccelerometerData;
+import com.example.aismartdrive.SensorUtil.SensorService;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -31,12 +37,18 @@ public class RideActivity extends AppCompatActivity implements OnMapReadyCallbac
     private double currentTime = 0;
     private double currentPrice = 0.0;
     private boolean rideFinished = false;
+    private Intent serviceIntent;
+    private SensorDataReceiver dataReceiver;
+    private Toast tooFastToast;
 
     @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ride);
+
+        //Accelerometer Sensor
+        manageSensorServices();
 
         sourceTextView = findViewById(R.id.sourceTextView);
         destinationTextView = findViewById(R.id.destinationTextView);
@@ -86,6 +98,67 @@ public class RideActivity extends AppCompatActivity implements OnMapReadyCallbac
         startLiveDataUpdates();
     }
 
+    @SuppressLint("UnspecifiedRegisterReceiverFlag")
+    private void manageSensorServices() {
+        // Start the FallDetectionService (Existing code)
+        serviceIntent = new Intent(this, SensorService.class);
+        startService(serviceIntent);
+
+        // Register the BroadcastReceiver (New Code)
+        dataReceiver = new SensorDataReceiver();
+        IntentFilter filter = new IntentFilter("VEHICLE_SENSOR_DATA");
+        registerReceiver(dataReceiver, filter);
+    }
+    private class SensorDataReceiver extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if (intent.getAction() != null && intent.getAction().equals("VEHICLE_SENSOR_DATA")) {
+                AccelerometerData accelerometerData = (AccelerometerData) intent.getSerializableExtra("accelerometerData");
+                if (accelerometerData != null) {
+                    double magnitude = accelerometerData.getMagnitude();
+                    if (magnitude < 9.81) {
+                        getWindow().getDecorView().setBackgroundColor(getResources().getColor(R.color.white, null));
+                        hideTooFastViews();
+                    } else {
+                        getWindow().getDecorView().setBackgroundColor(getResources().getColor(R.color.red, null));
+                        showTooFastViews();
+                        displayTooFastToast();
+                    }
+                }
+            }
+        }
+    }
+
+    private void showTooFastViews() {
+        // Show the "Vehicle Moving Too Fast" TextView
+        TextView tooFastTextView = findViewById(R.id.tooFastTextView);
+        if (tooFastTextView != null) {
+            tooFastTextView.setVisibility(View.VISIBLE);
+        }
+    }
+
+    private void hideTooFastViews() {
+        // Hide the "Vehicle Moving Too Fast" TextView
+        TextView tooFastTextView = findViewById(R.id.tooFastTextView);
+        if (tooFastTextView != null) {
+            tooFastTextView.setVisibility(View.GONE);
+        }
+
+        // Cancel the displayed toast if it's currently shown
+        if (tooFastToast != null) {
+            tooFastToast.cancel();
+        }
+    }
+
+    private void displayTooFastToast() {
+        // Display a toast message indicating that the vehicle is moving too fast
+        if (tooFastToast != null) {
+            tooFastToast.cancel();
+        }
+        tooFastToast = Toast.makeText(this, "Vehicle is moving too fast", Toast.LENGTH_SHORT);
+        tooFastToast.show();
+    }
+
     @Override
     public void onMapReady(GoogleMap googleMap) {
         this.googleMap = googleMap;
@@ -104,7 +177,6 @@ public class RideActivity extends AppCompatActivity implements OnMapReadyCallbac
             // Create a PolylineOptions object to define the car path
             PolylineOptions polylineOptions = new PolylineOptions()
                     .add(sourceLatLng)  // Starting point
-                    .add(/* Add intermediate points here */)  // Add intermediate points as needed
                     .add(destinationLatLng)  // Destination point
                     .color(Color.BLUE)  // Color of the path
                     .width(5);  // Width of the path
@@ -205,6 +277,7 @@ public class RideActivity extends AppCompatActivity implements OnMapReadyCallbac
     protected void onDestroy() {
         super.onDestroy();
         mapView.onDestroy();
+        unregisterReceiver(dataReceiver);
     }
 
     @Override

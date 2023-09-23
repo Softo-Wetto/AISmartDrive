@@ -105,14 +105,27 @@
         android:textSize="16sp"
         android:text="Price:" />
 
-    <!-- Movement and Compass Indicators -->
+    <!-- Movement, Fast and Compass Indicators -->
+
     <TextView
-        android:id="@+id/movementTextView"
+        android:id="@+id/tooFastTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/priceTextView"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="10dp"
+        android:text="| Vehicle Moving Too Fast |"
+        android:textStyle="bold"
+        android:textSize="18sp"
+        android:textColor="#0027FF" />
+
+    <TextView
+        android:id="@+id/movementTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tooFastTextView"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="5dp"
         android:text="Vehicle is not moving"
         android:textColor="#9C27B0"
         android:textStyle="bold"
@@ -124,8 +137,10 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/movementTextView"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="5dp"
+        android:textStyle="bold"
+        android:layout_marginTop="0dp"
         android:text="Direction: N"
+        android:textColor="#9C27B0"
         android:textSize="18sp" />
 
     <!-- MapView -->
@@ -134,7 +149,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/movementTextView"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="30dp"
         android:layout_marginBottom="65dp"/>
 
     <!-- Finish Ride Button -->
