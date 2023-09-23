@@ -3,7 +3,18 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@drawable/wave"
     android:padding="16dp">
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:src="@drawable/reviewicon"
+        android:layout_gravity="center_horizontal"
+        android:contentDescription="Vehicle Photo"
+        android:layout_marginBottom="16dp"
+        android:layout_marginTop="20dp"/>
 
     <TextView
         android:id="@+id/title"

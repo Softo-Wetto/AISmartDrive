@@ -4,7 +4,19 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/wave"
     tools:context=".EmergencyActivity">
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:src="@drawable/gyroscope"
+        android:layout_gravity="center_horizontal"
+        android:contentDescription="Vehicle Photo"
+        android:layout_marginBottom="116dp"
+        android:layout_marginHorizontal="170dp"
+        android:layout_marginTop="20dp"/>
 
     <!-- Title TextView -->
     <TextView
@@ -12,8 +24,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="-110dp"
         android:text="Manuel Mode"
+        android:layout_below="@+id/imageView"
         android:textColor="#000000"
         android:textSize="36sp"
         android:textStyle="bold|italic"/>
@@ -41,7 +54,7 @@
         android:layout_marginTop="10dp"
         android:gravity="center"
         android:text="Open the Virtual Sensor to move. For emergency, distance, time, price is temporarily stopped"
-        android:textColor="#F10707"
+        android:textColor="#9C27B0"
         android:textSize="18sp"
         android:textStyle="bold"/>
 
@@ -101,7 +114,8 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="10dp"
         android:text="Vehicle is not moving"
-        android:textColor="#FF0000"
+        android:textColor="#9C27B0"
+        android:textStyle="bold"
         android:textSize="18sp"/>
 
     <TextView

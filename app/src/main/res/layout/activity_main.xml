@@ -7,12 +7,14 @@
     android:layout_height="match_parent"
     android:gravity="center"
     android:orientation="vertical"
+    android:background="@drawable/wave"
     tools:context=".MainActivity">
+
     <ImageView
         android:id="@+id/artificalvehicleImage"
         android:layout_width="180dp"
         android:layout_height="180dp"
-        android:layout_marginTop="-200dp"
+        android:layout_marginTop="-150dp"
         android:src="@drawable/artificial_intelligence" />
     <TextView
         android:id="@+id/title"
@@ -30,7 +32,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Where Intelligence Meets the Road"
-        android:textColor="#F10707"
+        android:textColor="#9C27B0"
         android:textSize="20sp"
         android:textStyle="bold|italic"/>
 

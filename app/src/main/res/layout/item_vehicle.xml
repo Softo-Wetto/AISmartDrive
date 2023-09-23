@@ -16,7 +16,7 @@
             android:id="@+id/vehicleImage"
             android:layout_width="80dp"
             android:layout_height="80dp"
-            android:src="@drawable/round_directions_bus_24" />
+            android:src="@drawable/aivehicle" />
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"

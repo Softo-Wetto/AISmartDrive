@@ -4,7 +4,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@drawable/wave">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -24,9 +25,9 @@
 
         <ImageView
             android:id="@+id/vehicleImageView"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:src="@drawable/round_directions_bus_24"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:src="@drawable/aivehicle"
             android:layout_gravity="center_horizontal"
             android:contentDescription="Vehicle Photo"
             android:layout_marginBottom="16dp"/>

@@ -5,6 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:gravity="center"
+    android:background="@drawable/wave"
     android:padding="16dp">
 
     <Button
@@ -109,6 +110,7 @@
                 android:paddingEnd="16dp"
                 android:paddingBottom="8dp"
                 android:gravity="end"
+                android:textSize="17dp"
                 android:layout_gravity="end" />
 
             <TextView
@@ -116,6 +118,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:textSize="17dp"
                 android:gravity="start" />
         </TableRow>
 
@@ -128,6 +131,7 @@
                 android:paddingEnd="16dp"
                 android:paddingBottom="8dp"
                 android:gravity="end"
+                android:textSize="17dp"
                 android:layout_gravity="end" />
 
             <TextView
@@ -135,6 +139,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:textSize="17dp"
                 android:gravity="start" />
         </TableRow>
 
@@ -147,6 +152,7 @@
                 android:paddingEnd="16dp"
                 android:paddingBottom="8dp"
                 android:gravity="end"
+                android:textSize="17dp"
                 android:layout_gravity="end" />
 
             <TextView
@@ -154,6 +160,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:textSize="17dp"
                 android:gravity="start" />
         </TableRow>
     </TableLayout>

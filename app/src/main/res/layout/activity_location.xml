@@ -4,7 +4,18 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:gravity="center"
+    android:background="@drawable/wave"
     android:padding="16dp">
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:src="@drawable/location"
+        android:layout_gravity="center_horizontal"
+        android:contentDescription="Vehicle Photo"
+        android:layout_marginBottom="1dp"
+        android:layout_marginTop="0dp"/>
 
     <TextView
         android:id="@+id/title"
@@ -23,7 +34,7 @@
         android:id="@+id/TextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
+        android:layout_marginBottom="5dp"
         android:text="Choose Source and Destination for the vehicle:"
         android:gravity="center"
         android:textColor="#4C0D0D"
@@ -36,7 +47,7 @@
         android:layout_height="wrap_content"
         android:text="Vehicle"
         android:gravity="center"
-        android:textColor="#F10707"
+        android:textColor="#9C27B0"
         android:textSize="18sp"
         android:textStyle="bold"/>
 
@@ -53,21 +64,21 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Enter Destination Location"
-        android:layout_marginTop="16dp" />
+        android:layout_marginTop="5dp" />
 
     <EditText
         android:id="@+id/dateEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Enter Date (YYYY-MM-DD)"
-        android:layout_marginTop="16dp" />
+        android:layout_marginTop="5dp" />
 
     <EditText
         android:id="@+id/timeEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Enter Time (HH:MM AM/PM)"
-        android:layout_marginTop="16dp" />
+        android:layout_marginTop="5dp" />
 
     <!-- Add a "Calculate Route" button -->
     <Button
