@@ -2,6 +2,7 @@ package com.example.aismartdrive;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -50,7 +51,7 @@ public class SignupActivity extends AppCompatActivity {
             String password = passwordEditText.getText().toString();
             String confirmPassword = confirmPasswordEditText.getText().toString();
 
-            if (isValidCredentials(email, password, confirmPassword)) {
+            if (isValidCredentials(name, email, phoneNumber, dateOfBirth, password, confirmPassword)) {
                 boolean isAdmin = adminCheckBox.isChecked();
 
                 float rating = 0;
@@ -77,12 +78,27 @@ public class SignupActivity extends AppCompatActivity {
         backButton = findViewById(R.id.backButton);
     }
 
-    private boolean isValidCredentials(String email, String password, String confirmPassword) {
+    private boolean isValidCredentials(String name, String email, String phoneNumber, String dateOfBirth, String password, String confirmPassword) {
         boolean isValid = true;
+
+        if (TextUtils.isEmpty(name)) {
+            isValid = false;
+            nameEditText.setError("Name is required");
+        }
 
         if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
             isValid = false;
             emailEditText.setError("Invalid email");
+        }
+
+        if (TextUtils.isEmpty(phoneNumber)) {
+            isValid = false;
+            phoneNumberEditText.setError("Phone number is required");
+        }
+
+        if (TextUtils.isEmpty(dateOfBirth)) {
+            isValid = false;
+            dateOfBirthEditText.setError("Date of birth is required");
         }
 
         if (password.length() < 6) {
@@ -94,6 +110,7 @@ public class SignupActivity extends AppCompatActivity {
             isValid = false;
             confirmPasswordEditText.setError("Passwords do not match");
         }
+
         User existingUser = userDao.getUserByEmail(email);
         if (existingUser != null) {
             isValid = false;
