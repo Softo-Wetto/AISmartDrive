@@ -10,7 +10,6 @@ import android.widget.TextView;
 import com.example.aismartdrive.Utils.SharedPrefManager;
 
 public class MainActivity extends AppCompatActivity {
-
     private TextView titleTextView;
     private Button loginButton;
     private Button signupButton;
@@ -25,15 +24,12 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
         } else {
             setContentView(R.layout.activity_main);
-            //Linking the views
             setViewIds();
-
             loginButton.setOnClickListener(view -> {
                 Intent intent = new Intent(MainActivity.this,
                         LoginActivity.class);
                 startActivity(intent);
             });
-
             signupButton.setOnClickListener(view -> {
                 Intent intent = new Intent(MainActivity.this,
                         SignupActivity.class);

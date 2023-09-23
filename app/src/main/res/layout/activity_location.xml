@@ -51,7 +51,7 @@
         android:textSize="18sp"
         android:textStyle="bold"/>
 
-    <!-- Add EditText fields for source and destination -->
+    <!-- EditText fields for source and destination -->
     <EditText
         android:id="@+id/sourceEditText"
         android:layout_width="match_parent"
@@ -80,7 +80,7 @@
         android:hint="Enter Time (HH:MM AM/PM)"
         android:layout_marginTop="5dp" />
 
-    <!-- Add a "Calculate Route" button -->
+    <!--"Calculate Route" button -->
     <Button
         android:id="@+id/calculateRouteButton"
         android:layout_width="wrap_content"
@@ -98,7 +98,7 @@
         android:layout_marginTop="1dp"
         android:visibility="gone" />
 
-    <!-- Add a MapView -->
+    <!-- MapView -->
     <com.google.android.gms.maps.MapView
         android:id="@+id/mapView"
         android:layout_width="match_parent"

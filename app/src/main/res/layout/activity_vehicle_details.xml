@@ -25,8 +25,8 @@
 
         <ImageView
             android:id="@+id/vehicleImageView"
-            android:layout_width="120dp"
-            android:layout_height="120dp"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
             android:src="@drawable/aivehicle"
             android:layout_gravity="center_horizontal"
             android:contentDescription="Vehicle Photo"
@@ -37,7 +37,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Vehicle Name"
-            android:textSize="24sp"
+            android:textSize="25sp"
             android:textStyle="bold"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="8dp"

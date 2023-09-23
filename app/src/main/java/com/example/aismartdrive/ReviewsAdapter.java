@@ -1,5 +1,6 @@
 package com.example.aismartdrive;
 
+import android.annotation.SuppressLint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,9 +14,7 @@ import com.example.aismartdrive.DB.user.User;
 import java.util.List;
 
 public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.ReviewViewHolder> {
-
     private List<User> reviewsList;
-
     public ReviewsAdapter(List<User> reviewsList) {
         this.reviewsList = reviewsList;
     }
@@ -26,7 +25,7 @@ public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.ReviewVi
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_review, parent, false);
         return new ReviewViewHolder(view);
     }
-
+    @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull ReviewViewHolder holder, int position) {
         User review = reviewsList.get(position);
@@ -35,7 +34,6 @@ public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.ReviewVi
         holder.ratingTextView.setText("Rating: " + review.getRating());
         holder.commentTextView.setText("Comment: " + review.getComment());
     }
-
     @Override
     public int getItemCount() {
         return reviewsList.size();

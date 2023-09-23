@@ -76,10 +76,7 @@ public class RideActivity extends AppCompatActivity implements OnMapReadyCallbac
         finishButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // Stop the timer when the "Finish Ride" button is clicked
                 rideFinished = true;
-
-                // Go to PaymentActivity with data
                 goToPaymentActivity();
             }
         });
@@ -94,17 +91,13 @@ public class RideActivity extends AppCompatActivity implements OnMapReadyCallbac
                 goToEmergencyActivity();
             }
         });
-
         startLiveDataUpdates();
     }
 
     @SuppressLint("UnspecifiedRegisterReceiverFlag")
     private void manageSensorServices() {
-        // Start the FallDetectionService (Existing code)
         serviceIntent = new Intent(this, SensorService.class);
         startService(serviceIntent);
-
-        // Register the BroadcastReceiver (New Code)
         dataReceiver = new SensorDataReceiver();
         IntentFilter filter = new IntentFilter("VEHICLE_SENSOR_DATA");
         registerReceiver(dataReceiver, filter);
@@ -130,7 +123,6 @@ public class RideActivity extends AppCompatActivity implements OnMapReadyCallbac
     }
 
     private void showTooFastViews() {
-        // Show the "Vehicle Moving Too Fast" TextView
         TextView tooFastTextView = findViewById(R.id.tooFastTextView);
         if (tooFastTextView != null) {
             tooFastTextView.setVisibility(View.VISIBLE);
@@ -138,20 +130,16 @@ public class RideActivity extends AppCompatActivity implements OnMapReadyCallbac
     }
 
     private void hideTooFastViews() {
-        // Hide the "Vehicle Moving Too Fast" TextView
         TextView tooFastTextView = findViewById(R.id.tooFastTextView);
         if (tooFastTextView != null) {
             tooFastTextView.setVisibility(View.GONE);
         }
-
-        // Cancel the displayed toast if it's currently shown
         if (tooFastToast != null) {
             tooFastToast.cancel();
         }
     }
 
     private void displayTooFastToast() {
-        // Display a toast message indicating that the vehicle is moving too fast
         if (tooFastToast != null) {
             tooFastToast.cancel();
         }
@@ -166,7 +154,6 @@ public class RideActivity extends AppCompatActivity implements OnMapReadyCallbac
         // Enable zoom controls UI
         googleMap.getUiSettings().setZoomControlsEnabled(true);
 
-        // Add markers for source and destination
         LatLng sourceLatLng = getIntent().getParcelableExtra("sourceLatLng");
         LatLng destinationLatLng = getIntent().getParcelableExtra("destinationLatLng");
 
@@ -176,10 +163,10 @@ public class RideActivity extends AppCompatActivity implements OnMapReadyCallbac
 
             // Create a PolylineOptions object to define the car path
             PolylineOptions polylineOptions = new PolylineOptions()
-                    .add(sourceLatLng)  // Starting point
-                    .add(destinationLatLng)  // Destination point
-                    .color(Color.BLUE)  // Color of the path
-                    .width(5);  // Width of the path
+                    .add(sourceLatLng)
+                    .add(destinationLatLng)
+                    .color(Color.BLUE)
+                    .width(7);
 
             // Add the Polyline to the map
             googleMap.addPolyline(polylineOptions);
@@ -189,7 +176,7 @@ public class RideActivity extends AppCompatActivity implements OnMapReadyCallbac
             builder.include(sourceLatLng);
             builder.include(destinationLatLng);
             LatLngBounds bounds = builder.build();
-            int padding = 100;  // Padding in pixels
+            int padding = 100;
             CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngBounds(bounds, padding);
             googleMap.animateCamera(cameraUpdate);
         }
@@ -200,13 +187,12 @@ public class RideActivity extends AppCompatActivity implements OnMapReadyCallbac
         timer.scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
-                if (!rideFinished) { // Check if the ride is finished
+                if (!rideFinished) {
                     // Simulate live data updates
-                    currentDistance += 0.1393; // Increment distance by 0.1 km (adjust as needed)
-                    currentTime += 0.1; // Increment time by 1 minute (adjust as needed)
-                    currentPrice += 0.389; // Increment price by $1.5 (adjust as needed)
+                    currentDistance += 0.1393;
+                    currentTime += 0.1;
+                    currentPrice += 0.389;
 
-                    // Update the TextViews with live data
                     runOnUiThread(new Runnable() {
                         @SuppressLint({"SetTextI18n", "DefaultLocale"})
                         @Override
@@ -218,17 +204,15 @@ public class RideActivity extends AppCompatActivity implements OnMapReadyCallbac
                     });
                 }
             }
-        }, 0, 2000); // Update every 2 seconds (adjust as needed)
+        }, 0, 2000);
     }
 
     private void goToPaymentActivity() {
-        // Stop the timer when the ride is finished
         rideFinished = true;
-        // Prepare data to send to PaymentActivity
+
         String vehicleName = getIntent().getStringExtra("vehicleName");
 
         Intent paymentIntent = new Intent(this, PaymentActivity.class);
-
         paymentIntent.putExtra("sourceAddress", sourceTextView.getText().toString().replace("Source: ", ""));
         paymentIntent.putExtra("destinationAddress", destinationTextView.getText().toString().replace("Destination: ", ""));
         paymentIntent.putExtra("distance", currentDistance);
@@ -240,7 +224,6 @@ public class RideActivity extends AppCompatActivity implements OnMapReadyCallbac
     }
 
     private void goToEmergencyActivity() {
-        // Prepare data to send to EmergencyActivity
         Intent emergencyIntent = new Intent(this, EmergencyActivity.class);
 
         String vehicleName = getIntent().getStringExtra("vehicleName");
@@ -250,8 +233,6 @@ public class RideActivity extends AppCompatActivity implements OnMapReadyCallbac
         emergencyIntent.putExtra("distance", currentDistance);
         emergencyIntent.putExtra("time", currentTime);
         emergencyIntent.putExtra("price", currentPrice);
-
-        // Also pass the sourceLatLng and destinationLatLng
         LatLng sourceLatLng = getIntent().getParcelableExtra("sourceLatLng");
         LatLng destinationLatLng = getIntent().getParcelableExtra("destinationLatLng");
         emergencyIntent.putExtra("sourceLatLng", sourceLatLng);

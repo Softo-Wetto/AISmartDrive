@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.location.Address;
 import android.location.Geocoder;
-import android.location.Location;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -12,9 +11,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
 import com.google.android.gms.maps.*;
 import com.google.android.gms.maps.model.*;
 import java.io.IOException;
@@ -24,7 +21,7 @@ public class LocationActivity extends AppCompatActivity implements OnMapReadyCal
     private EditText sourceEditText, destinationEditText, dateEditText, timeEditText;
     private Button calculateRouteButton, bookingButton;
     private GoogleMap googleMap;
-    private MapView mapView; // Declare the MapView instance here
+    private MapView mapView;
 
     @SuppressLint("SetTextI18n")
     @Override
@@ -42,14 +39,13 @@ public class LocationActivity extends AppCompatActivity implements OnMapReadyCal
         mapView = findViewById(R.id.mapView);
         sourceEditText = findViewById(R.id.sourceEditText);
         destinationEditText = findViewById(R.id.destinationEditText);
-        dateEditText = findViewById(R.id.dateEditText); // Initialize date EditText
-        timeEditText = findViewById(R.id.timeEditText); // Initialize time EditText
+        dateEditText = findViewById(R.id.dateEditText);
+        timeEditText = findViewById(R.id.timeEditText);
         calculateRouteButton = findViewById(R.id.calculateRouteButton);
 
         bookingButton = findViewById(R.id.bookingButton);
         bookingButton.setVisibility(View.GONE);
 
-        // Initialize the mapView and get a reference to it
         MapView mapView = findViewById(R.id.mapView);
         mapView.onCreate(savedInstanceState);
         mapView.getMapAsync(this);
@@ -59,11 +55,10 @@ public class LocationActivity extends AppCompatActivity implements OnMapReadyCal
             public void onClick(View v) {
                 String sourceAddress = sourceEditText.getText().toString();
                 String destinationAddress = destinationEditText.getText().toString();
-                String date = dateEditText.getText().toString(); // Get date input
-                String time = timeEditText.getText().toString(); // Get time input
+                String date = dateEditText.getText().toString();
+                String time = timeEditText.getText().toString();
 
                 if (sourceAddress.isEmpty() || destinationAddress.isEmpty() || date.isEmpty() || time.isEmpty()) {
-                    // Handle empty input fields
                     Toast.makeText(LocationActivity.this, "Please fill in all fields", Toast.LENGTH_SHORT).show();
                 } else {
                     // Use geocoding to convert source and destination addresses to LatLng
@@ -73,7 +68,6 @@ public class LocationActivity extends AppCompatActivity implements OnMapReadyCal
                     // Calculate and display the route
                     if (sourceLatLng != null && destinationLatLng != null) {
                         drawRoute(sourceLatLng, destinationLatLng);
-                        // Show the "booking" button
                         bookingButton.setVisibility(View.VISIBLE);
                     }
                 }
@@ -89,20 +83,14 @@ public class LocationActivity extends AppCompatActivity implements OnMapReadyCal
                 LatLng sourceLatLng = getLatLngFromAddress(sourceAddress);
                 LatLng destinationLatLng = getLatLngFromAddress(destinationAddress);
 
-                // Retrieve the vehicleName from the previous activity
                 String vehicleName = getIntent().getStringExtra("vehicleName");
 
-                // Create an Intent to start RideActivity
                 Intent intent = new Intent(LocationActivity.this, RideActivity.class);
-                // Put the source and destination information as extras in the intent
                 intent.putExtra("sourceAddress", sourceAddress);
                 intent.putExtra("destinationAddress", destinationAddress);
-                // Put the source and destination coordinates as extras in the intent
                 intent.putExtra("sourceLatLng", sourceLatLng);
                 intent.putExtra("destinationLatLng", destinationLatLng);
-                // Put the vehicleName as an extra in the intent
                 intent.putExtra("vehicleName", vehicleName);
-                // Start RideActivity with the intent
                 startActivity(intent);
             }
         });
@@ -114,7 +102,6 @@ public class LocationActivity extends AppCompatActivity implements OnMapReadyCal
         googleMap.getUiSettings().setZoomControlsEnabled(true);
     }
 
-    // Helper method to convert address to LatLng
     private LatLng getLatLngFromAddress(String address) {
         Geocoder geocoder = new Geocoder(this);
         try {
@@ -129,7 +116,6 @@ public class LocationActivity extends AppCompatActivity implements OnMapReadyCal
         return null;
     }
 
-    // Helper method to draw the route on the map
     private void drawRoute(LatLng sourceLatLng, LatLng destinationLatLng) {
         if (googleMap != null) {
             googleMap.clear();
@@ -143,7 +129,7 @@ public class LocationActivity extends AppCompatActivity implements OnMapReadyCal
                     .add(sourceLatLng)
                     .add(destinationLatLng)
                     .color(getResources().getColor(R.color.red))
-                    .width(5);
+                    .width(7);
             googleMap.addPolyline(polylineOptions);
 
             // Move camera to fit both markers and route

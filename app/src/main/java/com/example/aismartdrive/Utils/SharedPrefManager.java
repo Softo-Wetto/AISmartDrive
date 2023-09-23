@@ -66,11 +66,9 @@ public class SharedPrefManager {
     }
 
     //FOR REVIEW:
-
     private static final String KEY_USER_RATING = "userRating"; // Key to store the user's rating
     private static final String KEY_USER_COMMENT = "userComment"; // Key to store the user's comment
     private static final String KEY_USER_VEHICLE_NAME = "vehicleName"; // Key to store the user's comment
-
 
     // Set the user's vehicleName
     public static void setVehicleName(String vehicleName) {
@@ -78,7 +76,6 @@ public class SharedPrefManager {
         editor.putString(KEY_USER_VEHICLE_NAME, vehicleName);
         editor.apply();
     }
-
     // Get the user's vehicleName
     public static String getVehicleName() {
         return getSharedPreference().getString(KEY_USER_VEHICLE_NAME, null);
@@ -88,24 +85,20 @@ public class SharedPrefManager {
         editor.putFloat(KEY_USER_RATING, rating);
         editor.apply();
     }
-
     // Get the user's rating
     public static float getUserRating() {
         return getSharedPreference().getFloat(KEY_USER_RATING, 0.0f);
     }
-
     // Set the user's comment
     public static void setUserComment(String comment) {
         SharedPreferences.Editor editor = getSharedPreference().edit();
         editor.putString(KEY_USER_COMMENT, comment);
         editor.apply();
     }
-
     // Get the user's comment
     public static String getUserComment() {
         return getSharedPreference().getString(KEY_USER_COMMENT, null);
     }
-
     public static void saveUser(User user) {
         SharedPreferences.Editor editor = getSharedPreference().edit();
         editor.putString(KEY_USER_EMAIL, user.getEmail());
@@ -113,7 +106,6 @@ public class SharedPrefManager {
         editor.putString(KEY_USER_COMMENT, user.getComment());
         editor.apply();
     }
-
     public static User loadUser() {
         String userEmail = getSharedPreference().getString(KEY_USER_EMAIL, null);
         String userVehicleName = getSharedPreference().getString(KEY_USER_VEHICLE_NAME, null);
@@ -126,7 +118,6 @@ public class SharedPrefManager {
         user.setVehicleName(userVehicleName);
         user.setRating(userRating);
         user.setComment(userComment);
-
         return user;
     }
 }

@@ -8,15 +8,12 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.example.aismartdrive.DB.vehicle.Vehicle;
 
 import java.util.ArrayList;
 
 public class VehicleAdapter extends RecyclerView.Adapter<VehicleAdapter.VehicleViewHolder> {
-
     private ArrayList<Vehicle> vehicleList;
-
     public interface OnItemClickListener {
         void onItemClick(int position);
     }
@@ -42,7 +39,6 @@ public class VehicleAdapter extends RecyclerView.Adapter<VehicleAdapter.VehicleV
         Vehicle vehicle = vehicleList.get(position);
         holder.vehicleName.setText(vehicle.getName());
         holder.vehicleType.setText(vehicle.getType());
-        // Bind other vehicle data as needed
     }
 
     @Override
@@ -69,7 +65,6 @@ public class VehicleAdapter extends RecyclerView.Adapter<VehicleAdapter.VehicleV
                     }
                 }
             });
-
         }
     }
 }

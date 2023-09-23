@@ -32,8 +32,8 @@
 
     <ImageView
         android:id="@+id/artificalvehicleImage"
-        android:layout_width="180dp"
-        android:layout_height="180dp"
+        android:layout_width="170dp"
+        android:layout_height="170dp"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="1dp"
         android:src="@drawable/userprofile" />
@@ -43,7 +43,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Name"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="10dp"
         android:layout_marginBottom="10dp"
         android:textStyle="bold|italic"
         android:textSize="25sp" />
@@ -81,12 +81,20 @@
         android:layout_marginBottom="5dp"
         android:textSize="18sp" />
 
+    <ImageView
+        android:id="@+id/starImage"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="1dp"
+        android:src="@drawable/staricon" />
+
     <TextView
         android:id="@+id/latestReviewTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:layout_marginBottom="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="0dp"
         android:layout_marginHorizontal="8dp"
         android:gravity="center_vertical"
         android:text="Latest Review:"
@@ -98,7 +106,7 @@
     <TableLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="10dp"
         android:stretchColumns="1">
 
         <!-- Table Row for Vehicle Name -->

@@ -14,7 +14,6 @@ import com.example.aismartdrive.DB.user.User;
 import com.example.aismartdrive.Utils.SharedPrefManager;
 
 public class LoginActivity extends AppCompatActivity {
-
     private EditText emailEditText, passwordEditText;
     private Button loginButton, backButton;
     private AppDatabase appDatabase;
@@ -26,14 +25,13 @@ public class LoginActivity extends AppCompatActivity {
 
         // Initialize Room database
         appDatabase = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "user-database")
-                .allowMainThreadQueries() // For simplicity; consider using AsyncTask or LiveData
+                .allowMainThreadQueries()
                 .build();
 
         // Linking the views
         setViewIds();
 
         backButton.setOnClickListener(view -> {
-            // Navigate back to the MainActivity
             Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
         });
@@ -41,24 +39,19 @@ public class LoginActivity extends AppCompatActivity {
         loginButton.setOnClickListener(view -> {
             String email = emailEditText.getText().toString();
             String password = passwordEditText.getText().toString();
-            // Perform login authentication logic here
             if (isValidCredentials(email, password)) {
                 SharedPrefManager.setUserEmail(email);
-                // Successful login, navigate to next activity
                 Toast.makeText(LoginActivity.this, "Login successful",
                         Toast.LENGTH_SHORT).show();
-                //Go to the VehicleList Page
                 Intent intent = new Intent(this, HomeActivity.class);
                 startActivity(intent);
             } else {
-                // Invalid credentials, show error message
                 Toast.makeText(LoginActivity.this, "Invalid Credentials",
                         Toast.LENGTH_SHORT).show();
                 emailEditText.setError("Invalid email or password");
                 passwordEditText.setError("Invalid email or password");
             }
         });
-
     }
 
     private void setViewIds() {
@@ -69,14 +62,10 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private boolean isValidCredentials(String email, String password) {
-        // Perform database query to check if the provided email and password match a user's credentials
         User user = appDatabase.userDao().getUserByEmail(email);
-
-        // Check if the user exists and if the provided password matches the stored password
         if (user != null && user.getPassword().equals(password)) {
-            return true; // Credentials are valid
+            return true;
         }
-
-        return false; // Invalid credentials
+        return false;
     }
 }

@@ -12,7 +12,6 @@ import com.example.aismartdrive.DB.user.User;
 import com.example.aismartdrive.Utils.SharedPrefManager;
 
 public class HomeActivity extends AppCompatActivity {
-
     private TextView userNameTextView;
     private Button vehicleListButton, userProfileButton;
     private AppDatabase appDatabase;
@@ -27,13 +26,11 @@ public class HomeActivity extends AppCompatActivity {
 
         // Initialize Room database
         appDatabase = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "user-database")
-                .allowMainThreadQueries() // For simplicity; consider using AsyncTask or LiveData
+                .allowMainThreadQueries()
                 .build();
 
-        // Retrieve the user's information from the database
         User loggedInUser = getUserInformation();
 
-        // Display the user's name in the TextView
         String welcomeText = "Welcome, " + loggedInUser.getName() + ". How can we assist you today!";
         userNameTextView.setText(welcomeText);
 
@@ -42,28 +39,22 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 SharedPrefManager.clearUserData();
-                // Navigate back to LoginActivity
                 Intent intent = new Intent(HomeActivity.this, LoginActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
-                finish(); // Close the current activity
+                finish();
             }
         });
-
-        // Set up click listeners for buttons
         vehicleListButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Navigate to VehicleListActivity
                 Intent intent = new Intent(HomeActivity.this, VehicleListActivity.class);
                 startActivity(intent);
             }
         });
-
         userProfileButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Navigate to UserProfileActivity
                 Intent intent = new Intent(HomeActivity.this, UserProfileActivity.class);
                 startActivity(intent);
             }
@@ -76,11 +67,8 @@ public class HomeActivity extends AppCompatActivity {
         userProfileButton = findViewById(R.id.userProfileButton);
     }
 
-
     private User getUserInformation() {
-        // Assuming the user is already logged in, retrieve user information based on the logged-in email
         String loggedInEmail = SharedPrefManager.getUserEmail();
-        // Retrieve user information from the database
         User user = appDatabase.userDao().getUserByEmail(loggedInEmail);
         return user;
     }

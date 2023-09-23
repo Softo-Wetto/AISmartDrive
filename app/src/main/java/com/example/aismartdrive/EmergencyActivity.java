@@ -103,7 +103,6 @@ public class EmergencyActivity extends AppCompatActivity implements OnMapReadyCa
     @Override
     public void onMapReady(GoogleMap googleMap) {
         this.googleMap = googleMap;
-
         // Enable zoom controls UI
         googleMap.getUiSettings().setZoomControlsEnabled(true);
 
@@ -118,14 +117,13 @@ public class EmergencyActivity extends AppCompatActivity implements OnMapReadyCa
 
             // Create a PolylineOptions object to define the path
             PolylineOptions polylineOptions = new PolylineOptions()
-                    .add(sourceLatLng)  // Starting point
-                    .add(destinationLatLng)  // Destination point
-                    .color(Color.BLUE)  // Color of the path
-                    .width(5);  // Width of the path
+                    .add(sourceLatLng)
+                    .add(destinationLatLng)
+                    .color(Color.BLUE)
+                    .width(7);
 
             // Add the Polyline to the map
             googleMap.addPolyline(polylineOptions);
-
             // Move camera to fit both markers and the path
             LatLngBounds.Builder builder = new LatLngBounds.Builder();
             builder.include(sourceLatLng);
@@ -139,11 +137,8 @@ public class EmergencyActivity extends AppCompatActivity implements OnMapReadyCa
 
     @SuppressLint("UnspecifiedRegisterReceiverFlag")
     private void manageSensorServices() {
-        // Start the FallDetectionService (Existing code)
         serviceIntent = new Intent(this, SensorService.class);
         startService(serviceIntent);
-
-        // Register the BroadcastReceiver (New Code)
         dataReceiver = new SensorDataReceiver();
         IntentFilter filter = new IntentFilter("VEHICLE_SENSOR_DATA");
         registerReceiver(dataReceiver, filter);
@@ -181,7 +176,6 @@ public class EmergencyActivity extends AppCompatActivity implements OnMapReadyCa
         if (tooFastTextView != null) {
             tooFastTextView.setVisibility(View.GONE);
         }
-
         // Cancel the displayed toast if it's currently shown
         if (tooFastToast != null) {
             tooFastToast.cancel();

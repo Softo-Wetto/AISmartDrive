@@ -59,7 +59,6 @@ public class VehicleListActivity extends AppCompatActivity {
         setViewIds();
 
         backButton.setOnClickListener(view -> {
-            // Navigate back to the MainActivity
             Intent intent = new Intent(this, HomeActivity.class);
             startActivity(intent);
         });
@@ -83,10 +82,8 @@ public class VehicleListActivity extends AppCompatActivity {
 
     private void handleClickOnVehicleItem() {
         vehicleAdapter.setOnItemClickListener(position -> {
-            // Get the clicked vehicle
             Vehicle clickedVehicle = vehicleList.get(position);
 
-            // Create an Intent to navigate to VehicleDetailsActivity
             Intent intent = new Intent(VehicleListActivity.this, VehicleDetailsActivity.class);
 
             // Pass necessary data to the VehicleDetailsActivity
@@ -101,7 +98,6 @@ public class VehicleListActivity extends AppCompatActivity {
             Vehicle vehicle = vehicleList.get(position);
             intent.putExtra("vehicleId",vehicle.id);
 
-            // Start the VehicleDetailsActivity
             startActivity(intent);
         });
     }
@@ -110,22 +106,17 @@ public class VehicleListActivity extends AppCompatActivity {
         User loggedInUser = getUserInformation();
 
         if (loggedInUser != null && loggedInUser.isAdmin()) {
-            // User is an admin, show the "Add Vehicle" button
             btnAddNewVehicle.setVisibility(View.VISIBLE);
             btnAddNewVehicle.setOnClickListener(view -> {
                 manageNewVehicleFunctionality();
             });
         } else {
-            // User is not an admin, hide the "Add Vehicle" button
             btnAddNewVehicle.setVisibility(View.GONE);
         }
     }
 
     private User getUserInformation() {
-        // Assuming the user is already logged in, retrieve user information based on the logged-in email
-        String loggedInEmail = SharedPrefManager.getUserEmail(); // You need to implement this method
-
-        // Retrieve user information from the database
+        String loggedInEmail = SharedPrefManager.getUserEmail();
         User user = appDatabase.userDao().getUserByEmail(loggedInEmail);
         return user;
     }
@@ -133,14 +124,11 @@ public class VehicleListActivity extends AppCompatActivity {
 
     @SuppressLint("UnspecifiedRegisterReceiverFlag")
     private void manageSensorServices() {
-        // Start the FallDetectionService (Existing code)
         serviceIntent = new Intent(this, SensorService.class);
         startService(serviceIntent);
-
-        // Register the BroadcastReceiver (New Code)
-        dataReceiver = new SensorDataReceiver(); // Initialising the variable
-        IntentFilter filter = new IntentFilter("VEHICLE_SENSOR_DATA"); //creating an instance of the filter that returns the sensor data
-        registerReceiver(dataReceiver, filter); // registering the filter with our dataReceiver
+        dataReceiver = new SensorDataReceiver();
+        IntentFilter filter = new IntentFilter("VEHICLE_SENSOR_DATA");
+        registerReceiver(dataReceiver, filter);
     }
 
     @Override
@@ -153,13 +141,10 @@ public class VehicleListActivity extends AppCompatActivity {
         @Override
         public void onReceive(Context context, Intent intent) {
             if (intent.getAction() != null && intent.getAction().equals("VEHICLE_SENSOR_DATA")) {
-                // Receive the sensor data and update the UI if required.
                 AccelerometerData accelerometerData = (AccelerometerData) intent.getSerializableExtra("accelerometerData");
-                // Making changes in the UI based on sensor data
                 if (accelerometerData != null && accelerometerData.getMagnitude() < 9.81){
                     getWindow().getDecorView().setBackgroundColor(getResources().getColor(R.color.white, null));
                 }else {
-                    // Toast.makeText(VehicleListActivity.this, "Danger!!!", Toast.LENGTH_SHORT).show();
                     getWindow().getDecorView().setBackgroundColor(getResources().getColor(R.color.red, null));
                 }
             }
@@ -197,28 +182,25 @@ public class VehicleListActivity extends AppCompatActivity {
 
             // Add the new vehicle to the list
             Vehicle vehicle = new Vehicle(vehicleName, vehicleType, vehicleNumber, source, destination, currentLocation, fuelStatus);
-
             VehicleDao vehicleDao = MyApp.getAppDatabase().vehicleDao();
-            AsyncTask.execute(() -> { // Asynctask uses a different thread asynchronously to insert the data. It prevents blocking the UI thread so that user can continue interacting with the app.
+            AsyncTask.execute(() -> {
                 vehicleDao.insert(vehicle);
             });
-
-            // Refresh the RecyclerView
-            //vehicleAdapter.notifyDataSetChanged();
         });
         AlertDialog dialog = builder.create();
         builder.setNegativeButton("Cancel", null);
         dialog.show();
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     private void getDataFromDatabase() {
         // Retrieve all vehicles asynchronously using LiveData
         VehicleDao vehicleDao = MyApp.getAppDatabase().vehicleDao();
         LiveData<List<Vehicle>> vehiclesLiveData = vehicleDao.getAllVehicles();
         vehiclesLiveData.observe(this, vehicles -> {
-            // Handle the list of vehicles here
-            vehicleList.clear(); // Removes all the existing data
-            vehicleList.addAll(vehicles); // Adding all the data from Database
+
+            vehicleList.clear();
+            vehicleList.addAll(vehicles);
             vehicleAdapter.notifyDataSetChanged();
         });
     }

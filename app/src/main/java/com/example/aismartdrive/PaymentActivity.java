@@ -44,7 +44,6 @@ public class PaymentActivity extends AppCompatActivity {
         double price = intent.getDoubleExtra("price", 0.0);
         String vehicleName = intent.getStringExtra("vehicleName"); // Retrieve vehicleName
 
-
         // Populate the TextViews with the retrieved data
         sourceAddressTextView.setText(sourceAddress);
         destinationAddressTextView.setText(destinationAddress);
@@ -53,24 +52,20 @@ public class PaymentActivity extends AppCompatActivity {
         priceTextView.setText(String.format("$%.2f", price));
 
         TextView vehicleNameTextView = findViewById(R.id.vehicleNameTextView);
-        vehicleNameTextView.setText(vehicleName); // Show vehicleName
+        vehicleNameTextView.setText(vehicleName);
 
         finishPaymentButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // Get the user-entered payment information
                 String fullName = nameEditText.getText().toString();
                 String cardNumber = cardNumberEditText.getText().toString();
                 String expirationDate = expirationDateEditText.getText().toString();
                 String cvv = cvvEditText.getText().toString();
-
-                // If the payment information is valid, proceed with the payment process
                 if (isValidPaymentInformation(fullName, cardNumber, expirationDate, cvv)) {
                     Intent reviewIntent = new Intent(PaymentActivity.this, ReviewActivity.class);
                     reviewIntent.putExtra("vehicleName", vehicleName);
                     startActivity(reviewIntent);
                 } else {
-                    // Display an error message or toast to inform the user of invalid input
                     Toast.makeText(PaymentActivity.this, "Invalid payment information. Please check and try again.", Toast.LENGTH_SHORT).show();
                 }
             }

@@ -18,18 +18,16 @@ import com.example.aismartdrive.Utils.SharedPrefManager;
 import java.util.ArrayList;
 import java.util.List;
 
-
 public class UserProfileActivity extends AppCompatActivity {
-
     private TextView nameTextView, emailTextView, dateOfBirthTextView, phoneNumberTextView, statusTextView;
-    private TextView vehicleNameTextView, ratingTextView, commentTextView; // Add TextViews for the new fields
+    private TextView vehicleNameTextView, ratingTextView, commentTextView;
     private AppDatabase appDatabase;
     private Button backButton;
     private RecyclerView reviewsRecyclerView;
     private ReviewsAdapter reviewsAdapter;
     private List<User> reviewsList = new ArrayList<>();
 
-    @SuppressLint("SetTextI18n")
+    @SuppressLint({"SetTextI18n", "NotifyDataSetChanged"})
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,10 +46,8 @@ public class UserProfileActivity extends AppCompatActivity {
         reviewsAdapter = new ReviewsAdapter(reviewsList);
         reviewsRecyclerView.setAdapter(reviewsAdapter);
 
-        // Retrieve the user's information and display it
         User loggedInUser = getUserInformation();
 
-        // Set the user's information in the TextViews along with labels
         nameTextView.setText("Name: " + loggedInUser.getName());
         emailTextView.setText("Email: " + loggedInUser.getEmail());
         dateOfBirthTextView.setText("Date of Birth: " + loggedInUser.getDateOfBirth());
@@ -65,8 +61,6 @@ public class UserProfileActivity extends AppCompatActivity {
         loggedInUser.setComment(userComment);
 
         nameTextView.setText(loggedInUser.getName());
-
-        // Display the vehicleName, rating, and comment in appropriate UI elements
         vehicleNameTextView.setText(loggedInUser.getVehicleName());
         ratingTextView.setText(String.valueOf(loggedInUser.getRating()));
         commentTextView.setText(loggedInUser.getComment());
@@ -81,7 +75,6 @@ public class UserProfileActivity extends AppCompatActivity {
         reviewsAdapter.notifyDataSetChanged();
 
         backButton.setOnClickListener(view -> {
-            // Navigate back to the MainActivity
             Intent intent = new Intent(this, HomeActivity.class);
             startActivity(intent);
         });
@@ -93,27 +86,19 @@ public class UserProfileActivity extends AppCompatActivity {
         dateOfBirthTextView = findViewById(R.id.dateOfBirthTextView);
         phoneNumberTextView = findViewById(R.id.phoneNumberTextView);
         statusTextView = findViewById(R.id.statusTextView);
-        vehicleNameTextView = findViewById(R.id.vehicleNameTextView); // Initialize the new TextViews
+        vehicleNameTextView = findViewById(R.id.vehicleNameTextView);
         ratingTextView = findViewById(R.id.ratingTextView);
         commentTextView = findViewById(R.id.commentTextView);
         backButton = findViewById(R.id.backButton);
     }
 
     private User getUserInformation() {
-        // Assuming the user is already logged in, retrieve user information based on the logged-in email
         String loggedInEmail = SharedPrefManager.getUserEmail();
-
-        // Retrieve user information from the database
         User user = appDatabase.userDao().getUserByEmail(loggedInEmail);
         return user;
     }
 
     private List<User> getUserReviews(String userEmail) {
-        // Retrieve all reviews for the user based on their email
         return appDatabase.userDao().getUserReviews(userEmail);
     }
 }
-
-
-
-

@@ -45,7 +45,7 @@
         android:background="@drawable/border_background">
 
         <!-- Table Row 0: Vehicle Name -->
-        <TableRow>
+        <TableRow android:background="@drawable/border_background">
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -68,7 +68,7 @@
         </TableRow>
 
         <!-- Table Row 1: Source Address -->
-        <TableRow>
+        <TableRow android:background="@drawable/border_background">
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -91,7 +91,7 @@
         </TableRow>
 
         <!-- Table Row 2: Destination Address -->
-        <TableRow>
+        <TableRow android:background="@drawable/border_background">
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -114,7 +114,7 @@
         </TableRow>
 
         <!-- Table Row 3: Distance -->
-        <TableRow>
+        <TableRow android:background="@drawable/border_background">
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -137,7 +137,7 @@
         </TableRow>
 
         <!-- Table Row 4: Time -->
-        <TableRow>
+        <TableRow android:background="@drawable/border_background">
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -160,7 +160,7 @@
         </TableRow>
 
         <!-- Table Row 5: Price -->
-        <TableRow>
+        <TableRow android:background="@drawable/border_background">
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -218,7 +218,7 @@
             android:layout_margin="16dp"
             android:background="@drawable/border_background">
 
-            <TableRow>
+            <TableRow android:background="@drawable/border_background">
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
