@@ -103,36 +103,26 @@ public class VehicleDetailsActivity extends AppCompatActivity {
     }
 
     private void analyseTemperatureData() {
-
-        // Define the desired date format
         SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm:ss", Locale.getDefault());
-
         AnyChartView tempChartView = findViewById(R.id.tempChart);
         tempChartView.setProgressBar(findViewById(R.id.progress_bar));
 
-        // Creating an instance of the line chart.
         Cartesian tempLineChart = AnyChart.line();
         tempLineChart.animation(true);
         tempLineChart.padding(10d, 20d, 5d, 20d);
-
-        // Setting the tap on value bar with X-value (Cross between the temperature and corresponding time)
         tempLineChart.crosshair().enabled(true);
         tempLineChart.crosshair()
                 .yLabel(true)
                 .yStroke((Stroke) null, null, null, (String) null, (String) null);
-
-        // Setting a point for tapping on the chart.
         tempLineChart.tooltip().positionMode(TooltipPositionMode.POINT);
-
-        tempLineChart.title("Determine how hot the vehicle is.");
-        tempLineChart.yAxis(0).title("Temperature (Degree celcius)");
+        tempLineChart.title("Temperature analysis over time");
+        tempLineChart.yAxis(0).title("Temperature (Degree Celsius)");
         tempLineChart.xAxis(0).title("Timestamp");
         tempLineChart.xAxis(0).labels().padding(5d, 5d, 5d, 5d);
         tempLineChart.legend().enabled(true);
         tempLineChart.legend().fontSize(13d);
         tempLineChart.legend().padding(0d, 0d, 10d, 0d);
 
-        // Initialising data for the chart
         List<DataEntry> seriesData = new ArrayList<>();
         Set set = Set.instantiate();
         Mapping series1Mapping = set.mapAs("{ x: 'x', value: 'value' }");
@@ -154,13 +144,26 @@ public class VehicleDetailsActivity extends AppCompatActivity {
         TemperatureDao temperatureDao = MyApp.getAppDatabase().temperatureDao();
         LiveData<List<TemperatureData>> temperatureLiveData = temperatureDao.getAllTemperatureData();
         temperatureLiveData.observe(this, temperatureDataList -> {
-            for(TemperatureData temperatureData: temperatureDataList){
-                Date date = new Date(temperatureData.getTimeStamp());
-                seriesData.add(new CustomDataEntry(dateFormat.format(date), temperatureData.getTemp()));
+            seriesData.clear(); // Clear existing data before adding new data
+
+            for (TemperatureData temperatureData : temperatureDataList) {
+                if (isValidTemperature(temperatureData.getTemp())) {
+                    Date date = new Date(temperatureData.getTimeStamp());
+                    seriesData.add(new CustomDataEntry(dateFormat.format(date), temperatureData.getTemp()));
+                }
             }
+
             set.data(seriesData);
         });
     }
+
+    private boolean isValidTemperature(float temperature) {
+        // Define your criteria for valid temperature values here
+        // For example, consider values in a reasonable temperature range
+        // and filter out any outliers or invalid readings.
+        return temperature >= -273.0f && temperature <= 100.0f; // Adjust the range as needed
+    }
+
 
     private class CustomDataEntry extends ValueDataEntry {
         CustomDataEntry(String x, Number value) {
