@@ -44,7 +44,6 @@ import java.util.List;
 import java.util.Locale;
 
 public class VehicleDetailsActivity extends AppCompatActivity {
-
     TextView tvVehicleName, tvVehicleType, vehicleNumber, source, destination, currentLocation, fuelStatus;
     Button btnUpdate, btnDelete;
     VehicleDao vehicleDao;
@@ -72,7 +71,6 @@ public class VehicleDetailsActivity extends AppCompatActivity {
         manageRoleBasedFeatures();
 
         backButton.setOnClickListener(view -> {
-            // Navigate back to the VehicleList
             Intent intent = new Intent(this, VehicleListActivity.class);
             startActivity(intent);
         });
@@ -86,70 +84,49 @@ public class VehicleDetailsActivity extends AppCompatActivity {
                         .setPositiveButton("Book", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                // User clicked the "Book" button in the dialog
-                                // Create an Intent to start the next activity (LocationActivity)
                                 Intent intent = new Intent(VehicleDetailsActivity.this, LocationActivity.class);
-
-                                // Pass the vehicleName as an extra to the next activity
                                 intent.putExtra("vehicleName", vehicleName);
-
-                                // Start the next activity
                                 startActivity(intent);
                             }
                         })
                         .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                // User clicked the "Cancel" button in the dialog
                                 // Do nothing, dialog will be dismissed
                             }
                         })
                         .show();
             } else {
-                // Handle the case where vehicle data is not available
                 Toast.makeText(this, "Vehicle data not available", Toast.LENGTH_SHORT).show();
             }
         });
     }
 
     private void analyseTemperatureData() {
-
-        // Define the desired date format
         SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm:ss", Locale.getDefault());
-
-        // Initialising the chart view with the AnyChart variable
         AnyChartView tempChartView = findViewById(R.id.tempChart);
-        // Adding the progress bar for loading the chart
         tempChartView.setProgressBar(findViewById(R.id.progress_bar));
 
-        // Creating an instance of the line chart.
         Cartesian tempLineChart = AnyChart.line();
-        tempLineChart.animation(true); // Setting Animation for the chart
+        tempLineChart.animation(true);
         tempLineChart.padding(10d, 20d, 5d, 20d);
-
-        // Setting the tap on value bar with X-value (Cross between the temperature and corresponding time)
         tempLineChart.crosshair().enabled(true);
         tempLineChart.crosshair()
                 .yLabel(true)
                 .yStroke((Stroke) null, null, null, (String) null, (String) null);
-
-        // Setting a point for tapping on the chart.
         tempLineChart.tooltip().positionMode(TooltipPositionMode.POINT);
-
-        tempLineChart.title("Temperature analysis over the time.");
-        tempLineChart.yAxis(0).title("Temperature (Degree celcius)");
+        tempLineChart.title("Temperature analysis over time");
+        tempLineChart.yAxis(0).title("Temperature (Degree Celsius)");
         tempLineChart.xAxis(0).title("Timestamp");
         tempLineChart.xAxis(0).labels().padding(5d, 5d, 5d, 5d);
         tempLineChart.legend().enabled(true);
         tempLineChart.legend().fontSize(13d);
         tempLineChart.legend().padding(0d, 0d, 10d, 0d);
 
-        // Initialising data for the chart
         List<DataEntry> seriesData = new ArrayList<>();
-        Set set = Set.instantiate(); // Initiating AnyChart set to synch the custom data with AnyChart data
-        Mapping series1Mapping = set.mapAs("{ x: 'x', value: 'value' }"); // Map for mapping values in X-Axis (time) with Y-axis (temperature)
+        Set set = Set.instantiate();
+        Mapping series1Mapping = set.mapAs("{ x: 'x', value: 'value' }");
 
-        // Creating series for first car. For multiple car, OR multiple lines of data, we need to repeat all the following 'series1' codes for each of them
         Line series1 = tempLineChart.line(series1Mapping);
         series1.name(tvVehicleName.getText().toString());
         series1.hovered().markers().enabled(true);
@@ -162,23 +139,31 @@ public class VehicleDetailsActivity extends AppCompatActivity {
                 .offsetX(5d)
                 .offsetY(5d);
 
-        tempChartView.setChart(tempLineChart); // adding the chart to the chart view
+        tempChartView.setChart(tempLineChart);
 
         TemperatureDao temperatureDao = MyApp.getAppDatabase().temperatureDao();
         LiveData<List<TemperatureData>> temperatureLiveData = temperatureDao.getAllTemperatureData();
         temperatureLiveData.observe(this, temperatureDataList -> {
-            // Handle the list of vehicles here
-            for(TemperatureData temperatureData: temperatureDataList){
-                Date date = new Date(temperatureData.getTimeStamp());
-                // converting our data into AnyChart customdata and adding them to seriesData
-                seriesData.add(new CustomDataEntry(dateFormat.format(date), temperatureData.getTemp()));
+            seriesData.clear(); // Clear existing data before adding new data
+
+            for (TemperatureData temperatureData : temperatureDataList) {
+                if (isValidTemperature(temperatureData.getTemp())) {
+                    Date date = new Date(temperatureData.getTimeStamp());
+                    seriesData.add(new CustomDataEntry(dateFormat.format(date), temperatureData.getTemp()));
+                }
             }
 
-            // Setting the series data into the set method of AnyChart library.
             set.data(seriesData);
-
         });
     }
+
+    private boolean isValidTemperature(float temperature) {
+        // Define your criteria for valid temperature values here
+        // For example, consider values in a reasonable temperature range
+        // and filter out any outliers or invalid readings.
+        return temperature >= -273.0f && temperature <= 100.0f; // Adjust the range as needed
+    }
+
 
     private class CustomDataEntry extends ValueDataEntry {
         CustomDataEntry(String x, Number value) {
@@ -194,7 +179,6 @@ public class VehicleDetailsActivity extends AppCompatActivity {
         User loggedInUser = getUserInformation();
 
         if (loggedInUser != null && loggedInUser.isAdmin()) {
-            // User is an admin, show admin features
             btnDelete.setVisibility(View.VISIBLE);
             btnUpdate.setVisibility(View.VISIBLE);
 
@@ -205,25 +189,19 @@ public class VehicleDetailsActivity extends AppCompatActivity {
                 deleteTheVehicle();
             });
         } else {
-            // User is not an admin, hide admin features
             btnUpdate.setVisibility(View.GONE);
             btnDelete.setVisibility(View.GONE);
         }
     }
 
     private User getUserInformation() {
-        // Retrieve the logged-in user's email from shared preferences
         String loggedInEmail = SharedPrefManager.getUserEmail();
-
-        // Retrieve user information from the database using the email
         User user = appDatabase.userDao().getUserByEmail(loggedInEmail);
-
         return user;
     }
 
 
     private void populatingVehicleDetails() {
-
         if (getIntent().getIntExtra("vehicleId", -1) != -1){
             vehicleId = getIntent().getIntExtra("vehicleId", -1);
             retrievingAndSettingVehicleData(vehicleId);
@@ -232,7 +210,6 @@ public class VehicleDetailsActivity extends AppCompatActivity {
         }else {
             Toast.makeText(this, "No Vehicle Id Found", Toast.LENGTH_SHORT).show();
         }
-
     }
 
     private void handlingUpdateEvent() {
@@ -339,10 +316,8 @@ public class VehicleDetailsActivity extends AppCompatActivity {
         });
         // Setting the update cancellation
         builder.setNegativeButton("Cancel", (dialog, which) -> {
-            // Do nothing or handle any other actions
             dialog.cancel();
         });
-        //Creating and showing the dialog.
         AlertDialog dialog = builder.create();
         dialog.show();
     }

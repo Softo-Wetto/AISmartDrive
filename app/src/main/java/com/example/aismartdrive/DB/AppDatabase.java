@@ -1,10 +1,6 @@
 package com.example.aismartdrive.DB;
 
-import androidx.lifecycle.LiveData;
-import androidx.room.Dao;
 import androidx.room.Database;
-import androidx.room.Insert;
-import androidx.room.Query;
 import androidx.room.RoomDatabase;
 
 import com.example.aismartdrive.DB.sensor.AccelerometerDao;

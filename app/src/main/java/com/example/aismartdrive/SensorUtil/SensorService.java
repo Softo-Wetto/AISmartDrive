@@ -23,7 +23,6 @@ import com.example.aismartdrive.Utils.MyApp;
 import java.util.Arrays;
 
 public class SensorService extends Service implements SensorEventListener {
-
     private SensorManager sensorManager;
     private Sensor tempSensor = null;
     private Sensor acceSensor = null;
@@ -33,23 +32,17 @@ public class SensorService extends Service implements SensorEventListener {
         super.onCreate();
 
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
-
         if (sensorManager.getDefaultSensor(Sensor.TYPE_AMBIENT_TEMPERATURE) != null){
-
             tempSensor = sensorManager.getDefaultSensor(Sensor.TYPE_AMBIENT_TEMPERATURE);
-
         }else {
             Toast.makeText(this, "Device does not have Temperature Sensor", Toast.LENGTH_SHORT).show();
         }
 
         if (sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER) != null){
-
             acceSensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
-
         }else {
             Toast.makeText(this, "Device does not have Acceleration Sensor", Toast.LENGTH_SHORT).show();
         }
-
     }
 
     @Override
@@ -58,11 +51,9 @@ public class SensorService extends Service implements SensorEventListener {
         if (tempSensor != null){
             sensorManager.registerListener(this, tempSensor, SensorManager.SENSOR_DELAY_NORMAL);
         }
-
         if (tempSensor != null){
             sensorManager.registerListener(this, acceSensor, SensorManager.SENSOR_DELAY_NORMAL);
         }
-
         return START_STICKY;
     }
 
@@ -73,7 +64,6 @@ public class SensorService extends Service implements SensorEventListener {
         if (sensorManager!=null){
             sensorManager.unregisterListener(this);
         }
-
     }
 
     @Nullable
@@ -96,7 +86,6 @@ public class SensorService extends Service implements SensorEventListener {
             AsyncTask.execute(()->{
                 temperatureDao.insertTemperature(temperatureData);
             });
-
         }
 
         if (sensorEvent.sensor.getType() == Sensor.TYPE_ACCELEROMETER){
@@ -122,13 +111,10 @@ public class SensorService extends Service implements SensorEventListener {
             Intent broadcastIntent = new Intent("VEHICLE_SENSOR_DATA");
             broadcastIntent.putExtra("accelerometerData", accelerometerData);
             sendBroadcast(broadcastIntent);
-
         }
-
     }
 
     @Override
     public void onAccuracyChanged(Sensor sensor, int i) {
-
     }
 }

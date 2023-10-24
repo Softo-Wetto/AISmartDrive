@@ -54,7 +54,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="You must fill in all the fields"
-        android:textColor="#F10707"
+        android:textColor="#673AB7"
         android:textSize="18sp"
         android:textStyle="bold"/>
 

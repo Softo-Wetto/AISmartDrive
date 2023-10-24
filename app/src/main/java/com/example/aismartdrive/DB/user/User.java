@@ -18,7 +18,7 @@ public class User {
     private String comment;
 
     public User() {
-        // Default constructor code here
+        // Default Constructor
     }
 
     public User(String name, String email, String phoneNumber, String dateOfBirth, String password, boolean isAdmin, String vehicleName,
