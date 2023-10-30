@@ -11,6 +11,7 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -207,10 +208,12 @@ public class EmergencyActivity extends AppCompatActivity implements OnMapReadyCa
                 isMovingForward = true;
                 isMovingBackward = false;
                 movementTextView.setText("Vehicle is moving backward");
+                Log.d("Sensor", "Vehicle is moving backward");
             } else if (xRotation < -threshold) {
                 isMovingForward = false;
                 isMovingBackward = true;
                 movementTextView.setText("Vehicle is moving forward");
+                Log.d("Sensor", "Vehicle is moving forward");
             } else {
                 isMovingForward = false;
                 isMovingBackward = false;
@@ -221,10 +224,12 @@ public class EmergencyActivity extends AppCompatActivity implements OnMapReadyCa
                 isMovingLeft = true;
                 isMovingRight = false;
                 movementTextView.setText("Vehicle is moving right");
+                Log.d("Sensor", "Vehicle is moving right");
             } else if (yRotation < -threshold) {
                 isMovingLeft = false;
                 isMovingRight = true;
                 movementTextView.setText("Vehicle is moving left");
+                Log.d("Sensor", "Vehicle is moving left");
             } else {
                 isMovingLeft = false;
                 isMovingRight = false;
@@ -247,8 +252,10 @@ public class EmergencyActivity extends AppCompatActivity implements OnMapReadyCa
 
             // Display the compass direction
             compassTextView.setText("Direction: " + compassDirection);
+            Log.d("Sensor", "Direction: " + compassDirection);
         }
     }
+
 
     @Override
     public void onAccuracyChanged(Sensor sensor, int i) {
