@@ -133,8 +133,8 @@ public class SensorService extends Service implements SensorEventListener {
             float y = sensorEvent.values[1];
             float z = sensorEvent.values[2];
             double magnitude = Math.sqrt(x * x + y * y + z * z);
-            //Log.d("Sensor data ", "Acceleration towards X, Y, and Z "+
-                    //Arrays.toString(sensorEvent.values) +" and magnitude: "+magnitude);
+            Log.d("Sensor data ", "Acceleration towards X, Y, and Z "+
+                    Arrays.toString(sensorEvent.values) +" and magnitude: "+magnitude);
 
 
             AccelerometerData accelerometerData = new
