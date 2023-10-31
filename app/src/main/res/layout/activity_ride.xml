@@ -90,7 +90,23 @@
         android:layout_centerHorizontal="true"
         android:textSize="18sp"
         android:layout_marginTop="10dp" />
+    <TextView
+        android:id="@+id/carPositionTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/priceTextView"
+        android:layout_centerHorizontal="true"
+        android:textSize="18sp"
+        android:layout_marginTop="10dp" />
 
+    <TextView
+        android:id="@+id/lightTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/carPositionTextView"
+        android:layout_centerHorizontal="true"
+        android:textSize="18sp"
+        android:layout_marginTop="10dp" />
     <TextView
         android:id="@+id/timeTextView"
         android:layout_width="wrap_content"
@@ -117,7 +133,7 @@
         android:layout_height="0dp"
         android:layout_below="@id/destinationTextView"
         android:layout_above="@id/buttonLayout"
-        android:layout_marginTop="110dp"
+        android:layout_marginTop="170dp"
         android:layout_marginBottom="16dp"/>
 
     <LinearLayout

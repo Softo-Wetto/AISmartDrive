@@ -3,8 +3,10 @@ package com.example.aismartdrive.DB.sensor;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import java.io.Serializable;
+
 @Entity(tableName = "temperatureData")
-public class TemperatureData {
+public class TemperatureData implements Serializable {
 
     @PrimaryKey
     long timeStamp;

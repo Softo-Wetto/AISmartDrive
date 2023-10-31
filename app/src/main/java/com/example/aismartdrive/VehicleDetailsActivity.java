@@ -164,7 +164,6 @@ public class VehicleDetailsActivity extends AppCompatActivity {
         return temperature >= -273.0f && temperature <= 100.0f; // Adjust the range as needed
     }
 
-
     private class CustomDataEntry extends ValueDataEntry {
         CustomDataEntry(String x, Number value) {
             super(x, value);

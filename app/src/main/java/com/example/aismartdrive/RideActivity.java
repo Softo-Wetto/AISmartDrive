@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -15,6 +16,8 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.aismartdrive.DB.sensor.AccelerometerData;
+import com.example.aismartdrive.DB.sensor.LightData;
+import com.example.aismartdrive.DB.sensor.ProximityData;
 import com.example.aismartdrive.SensorUtil.SensorService;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -26,11 +29,13 @@ import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
 
+import org.w3c.dom.Text;
+
 import java.util.Timer;
 import java.util.TimerTask;
 
 public class RideActivity extends AppCompatActivity implements OnMapReadyCallback {
-    private TextView sourceTextView, destinationTextView, distanceTextView, timeTextView, priceTextView;
+    private TextView sourceTextView, destinationTextView, distanceTextView, timeTextView, priceTextView, carPositionTextView, lightTextView;
     private MapView mapView;
     private GoogleMap googleMap;
     private double currentDistance = 0.0;
@@ -41,7 +46,7 @@ public class RideActivity extends AppCompatActivity implements OnMapReadyCallbac
     private SensorDataReceiver dataReceiver;
     private Toast tooFastToast;
 
-    @SuppressLint("SetTextI18n")
+    @SuppressLint({"SetTextI18n", "MissingInflatedId"})
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,6 +60,8 @@ public class RideActivity extends AppCompatActivity implements OnMapReadyCallbac
         distanceTextView = findViewById(R.id.distanceTextView);
         timeTextView = findViewById(R.id.timeTextView);
         priceTextView = findViewById(R.id.priceTextView);
+        carPositionTextView = findViewById(R.id.carPositionTextView);
+        lightTextView = findViewById(R.id.lightTextView);
 
         mapView = findViewById(R.id.mapView);
         mapView.onCreate(savedInstanceState);
@@ -70,6 +77,8 @@ public class RideActivity extends AppCompatActivity implements OnMapReadyCallbac
         // Display source and destination addresses
         sourceTextView.setText("Source: " + sourceAddress);
         destinationTextView.setText("Destination: " + destinationAddress);
+        lightTextView.setText("Light:");
+        carPositionTextView.setText("Distance from vehicle ahead:");
 
         Button finishButton = findViewById(R.id.finishButton);
         Button emergencyButton = findViewById(R.id.emergencyButton);
@@ -107,6 +116,8 @@ public class RideActivity extends AppCompatActivity implements OnMapReadyCallbac
         public void onReceive(Context context, Intent intent) {
             if (intent.getAction() != null && intent.getAction().equals("VEHICLE_SENSOR_DATA")) {
                 AccelerometerData accelerometerData = (AccelerometerData) intent.getSerializableExtra("accelerometerData");
+                ProximityData proximityData = (ProximityData) intent.getSerializableExtra("proximityData");
+                LightData lightData = (LightData) intent.getSerializableExtra("lightData");
                 if (accelerometerData != null) {
                     double magnitude = accelerometerData.getMagnitude();
                     if (magnitude < 9.81) {
@@ -118,10 +129,27 @@ public class RideActivity extends AppCompatActivity implements OnMapReadyCallbac
                         displayTooFastToast();
                     }
                 }
+                if (proximityData != null) {
+                    float distance_raw = proximityData.getDistance();
+                    changeCarDistance(distance_raw);
+                }
+                if (lightData != null) {
+                    float light = lightData.getLight();
+                    changeLight(light);
+                }
             }
         }
     }
+    private void changeCarDistance(float distance){
+        String car = Float.toString(distance);
+        Log.d("Test2","Data worked" +car);
+        carPositionTextView.setText("Distance from vehicle ahead: " + car+ "m");
+    }
+    private void changeLight(float light){
+        String sunlight = Float.toString(light);
+        lightTextView.setText("Light: " +sunlight+ " Lux");
 
+    }
     private void showTooFastViews() {
         TextView tooFastTextView = findViewById(R.id.tooFastTextView);
         if (tooFastTextView != null) {
